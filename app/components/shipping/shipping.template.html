@@ -1,0 +1,82 @@
+<div class="ec_container">
+    <!-- Fil d'ariane -->
+    <div class="ec_container_breadcrumb">
+        <ol class="ec_subcontainer" id="breadcrumb">
+            <li><a href="#!/panier">Panier</a></li>
+            <li class="active"><a href="#!/livraison">Livraison</a></li>
+            <li><a href="#!/confirmation">Confirmation</a></li>
+        </ol>
+    </div>
+
+    <!-- Introduction panier de commande -->
+    <div class="ec_title">
+        <h1>Livraison</h1>
+    </div>
+
+    <!-- Panier de commande -->
+    <div class="ec_subcontainer" ng-controller="ShippingCtrl">
+        <div class="ec_container_basket">
+            <table id="basket">
+                <thead>
+                    <tr>
+                        <th class="ec_th_illustration"></th>
+                        <th class="ec_th_shipping_mode">Mode de livraison</th>
+                        <th class="ec_th_unit_price">Frais supplémentaires</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="selectable" ng-repeat="modeLivraison in shippingModes" ng-click="selectShippingMode(modeLivraison)" ng-class="{'shipping_mode_selected': shippingModeSelected.idModeLivraison === modeLivraison.idModeLivraison}">
+                        <td class="ec_td_illustration">
+                            <i class="{{modeLivraison.faIcon}}"></i>
+                        </td>
+                        <td class="ec_td_shipping_mode">
+                            <span class="shipping_name">{{modeLivraison.libelle}}</span>
+                            <span class="shipping_description">{{modeLivraison.description}}</span>
+                        </td>
+                        <td class="ec_td_unit_price">
+                            <span class="price_value">{{modeLivraison.frais}}</span>
+                            <span class="currency"></span>
+                        </td>
+                    </tr>
+                    <tr class="shipping_mode_address" ng-show="shippingModeSelected.idModeLivraison == 2">
+                        <td class="ec_td_empty"></td>
+                        <td class="ec_td_shipping_mode_address_choice" colspan="2">
+                            <span class="shipping_mode_label">Adresse de livraison</span>
+                            <div class="details">
+                                <select name="ec_shipping_address_name">
+                                    <option value="Domicile" selected="selected">Domicile</option>
+                                    <option value="Travail">Travail</option>
+                                </select>
+                                <button class="add">
+                                    <i class="fa fa-plus"></i> 
+                                    <span>Ajouter une adresse de livraison</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot ng-show="shippingModeSelected !== null">
+                    <tr>
+                        <td class="ec_tf_empty"></td>
+                        <td class="ec_tf_label">Frais de livraison</td>
+                        <td class="ec_tf_total_price">
+                            <span class="total_price">
+                                <span class="price_value">{{shippingPrice}}</span>
+                            </span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="ec_subcontainer">
+        <div class="cmd_final">
+            <span></span>
+            <a class="btn_a continue" href="#!/confirmation">
+                <span>Confirmer ma commande</span>
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        </div>
+    </div>
+</div>

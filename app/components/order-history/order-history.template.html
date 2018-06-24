@@ -1,0 +1,117 @@
+<div class="ec_container" ng-controller="OrderHistoryCtrl">
+
+    <!-- Introduction historique de commande -->
+    <div class="ec_title">
+        <h1>Commandes</h1>
+    </div>
+
+    <!-- Historique de commande -->
+    <div class="ec_subcontainer">
+        <ul class="ec_routes">
+            <li ng-repeat="oos in orderOrganizationStatus" ng-class="{'active': oos.active === true}" ng-click="switchOrganizationStatus(oos.id)">{{oos.label}}</li>
+        </ul>
+        <div class="ec_container_order_history">
+            <div class="an_order" ng-show="domain.possiblesValues.indexOf(order.status) || domain.label === 'Toutes'" ng-class="{'active': order.active === true, 'ended': order.status === 'Livrée', 'in_progress': order.status === 'En cours', 'canceled': order.status === 'Non livrée'}" ng-repeat="order in orderHistoryList">
+                <div class="an_order_header" ng-click="dropdownOrder(order.idOrder)">
+                    <div class="order_number">
+                        <span class="order_number_label">Commande n°</span>
+                        <span class="order_number_value">{{order.idOrder}}</span>
+                    </div>
+                    <div class="order_status">
+                        <span class="order_status_icon" ng-switch="order.status">
+                            <i ng-switch-when="Livrée" class="fas fa-check-circle"></i>
+                            <i ng-switch-when="En cours" class="fas fa-spinner"></i>
+                            <i ng-switch-when="Non livrée" class="fas fa-times-circle "></i>
+                        </span>
+                        <span class="order_status_label">{{order.status}}</span>
+                    </div>
+                    <div class="order_time">
+                        <div class="order_date">
+                            <span class="order_date">{{order.date}}</span>
+                        </div>
+                        <div class="order_hour">
+                            <span class="order_hour_label">à</span>
+                            <span class="order_hour">{{order.time}}</span>
+                        </div>
+                    </div>
+                    <div class="order_shipping">
+                        <span class="order_shipping_address">{{order.address.address}}</span>
+                        <span class="order_shipping_zip">{{order.address.zip}}</span>
+                        <span class="order_shipping_city">{{order.address.city}}</span>
+                    </div>
+                </div>
+                <div class="an_order_body">
+                    <table class="order_products_list">
+                        <thead>
+                            <tr>
+                                <th class="th_product_quantity">Quantité</th>
+                                <th class="th_product_product_name">Produit</th>
+                                <th class="th_empty"></th>
+                                <!--th class="th_product_unit_price">Prix unitaire HT</th>
+                                <th class="th_product_total_price">Prix total</th-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="product in articles">
+                                <td class="td_product_quantity">{{product.quantity}}</td>
+                                <td class="td_product_product_name">{{product.label}}</td>
+                                <td class="td_empty"></td>
+                            </tr>
+                            <!--tr>
+                                <td class="td_product_quantity">1</td>
+                                <td class="td_product_product_name">Pizza Steak</td>
+                                <td class="td_product_unit_price">
+                                    <span class="price_value">14.00</span>
+                                    <span class="currency">€</span>
+                                </td>
+                                <td class="td_product_total_price">
+                                    <span class="price_value">14.00</span>
+                                    <span class="currency">€</span>
+                                </td>
+                            </tr-->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" class="ec_tf_label">Prix total HT</td>
+                                <td class="ec_tf_total_price">
+                                    <span class="total_price">
+                                        <span class="price_value">{{order.totalPriceExcludingTaxFloat}}</span>
+                                        <span class="currency">€</span>
+                                    </span>
+                                </td>
+                            </tr>
+                            <!--tr>
+                                <td colspan="2" class="ec_tf_label">Frais de livraison</td>
+                                <td class="ec_tf_total_price">
+                                    <span class="total_price">
+                                        <span class="price_value">3.50 €</span>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="ec_tf_label">Frais de TVA</td>
+                                <td class="ec_tf_total_price">
+                                    <span class="total_price">
+                                        <span class="price_value">4.20</span>
+                                        <span class="currency">€</span>
+                                    </span>
+                                </td>
+                            </tr-->
+                            <tr>
+                                <td colspan="2" class="ec_tf_label">Prix total TTC</td>
+                                <td class="ec_tf_total_price">
+                                    <span class="total_price">
+                                        <span class="price_value">{{order.totalPriceIncludingTaxFloat}}</span>
+                                        <span class="currency">€</span>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <!--span class="order_status">Commande n°</span-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

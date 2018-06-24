@@ -1,0 +1,243 @@
+/**
+ * E-COMMAND - Feuille de style
+ * Style général
+ */
+
+/**
+ * Import des polices d'écritures
+ */
+
+@font-face {
+  font-family: 'Comfortaa-Regular';
+  src: url('../fonts/Comfortaa/Comfortaa-Regular.ttf');
+}
+
+::-webkit-selection {
+  background: rgb(71, 211, 217);
+  color: #FFFFFF;
+}
+
+::-moz-selection {
+  background: rgb(71, 211, 217);
+  color: #FFFFFF;
+}
+
+::selection {
+  background: rgb(71, 211, 217);
+  color: #FFFFFF;
+}
+
+/**
+* Style général
+*/
+* {
+  margin: 0;
+  padding: 0;
+  outline: none; 
+  font-family: 'Comfortaa-Regular';
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+       -o-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html, body { width: 100%; }
+
+#ec_body { min-height: 820px; }
+
+a {
+color: #224E76;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Comfortaa-Regular';
+}
+
+h1 {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  height: 90px;
+  background-color: #35373B;
+}
+
+/**
+* Style personnalisé
+*/
+.ec_container {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 40px 0;
+}
+.ec_subcontainer {
+  width: 100%;
+}
+.ec_subcontainer h3 {
+  font-weight: normal;
+  color: #C5C5C5;
+  margin-top: 15px;
+}
+.ec_subcontainer:nth-child(1) {
+  padding-top: 0;
+}
+
+input:focus {
+  box-shadow:none;
+  border:0 none;
+  outline:0;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  padding: 7px 0;
+  border: none;
+  border-bottom: 1px solid #C5C5C5;
+  transition: all 0.4s ease;
+  font-size: 16px;
+  color: #224E76;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-bottom: 1px solid #224E76;
+  box-shadow: 0px 0px 0px transparent;
+}
+select {
+  min-width: 200px;
+  padding: 10px;
+}
+button {
+  padding: 10px 10px;
+  border: 1px solid #CCCCCC;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+a.btn_a {
+  max-width: 300px;
+  padding: 15px 10px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+}
+button.add,
+a.add {
+  border-color: #D5FBB3;
+  background-color: #D5FBB3;
+}
+button.add:hover,
+a.add:hover {
+  border-color: rgb(167, 236, 107);
+  background-color: rgb(167, 236, 107);
+}
+button.error,
+a.error {
+  border-color: #F44336;
+  background-color: #F44336;
+  color: #FFFFFF;
+}
+button.error:hover,
+a.error:hover {
+  border-color: #cf2e23;
+  background-color: #cf2e23;
+  color: #FFFFFF;
+}
+button.continue,
+a.continue {
+  border-color: #00BCD4;
+  background-color: #00BCD4;
+  color: #FFFFFF;
+}
+button.continue:hover,
+a.continue:hover {
+  border-color: #2196F3;
+  background-color: #2196F3;
+  color: #FFFFFF;
+}
+button.confirm,
+a.confirm {
+  border-color: #00BCD4;
+  background-color: #00BCD4;
+  color: #FFFFFF;
+}
+button.confirm:hover,
+a.confirm:hover {
+  border-color: #363636;
+  background-color: #363636;
+  color: #FFFFFF;
+}
+button.neutral,
+a.neutral {
+  border-color: #dcdcdc;
+  background-color: #dcdcdc;
+  color: #363636;
+}
+button.neutral:hover,
+a.neutral:hover {
+  border-color: #363636;
+  background-color: #363636;
+  color: #FFFFFF;
+}
+
+.underline { text-decoration: underline; }
+
+.cmd_final {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 0;
+}
+.cmd_option {
+  padding: 15px 0;
+}
+
+/**
+* Bloc de titre
+*/
+.ec_title {
+  padding: 50px 0;
+}
+.ec_title h1 {
+  width: 100%;
+  text-align: center;
+}
+.ec_title .ec_explain {
+  margin: 20px 0;
+  text-align: justify;
+  text-align-last: center;
+}
+
+.prompt {
+  color: rgb(92, 92, 92);
+}
+  .prompt.prompt_empty_title {
+    font-weight: bold;
+  }
+
+/**
+ * Animations
+ *
+.ng-enter, .ng-leave {
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+.ec_subcontainer.ng-enter {
+  -webkit-animation-name: fadeIn;
+          animation-name: fadeIn;
+}
+.ec_subcontainer.ng-leave {
+  -webkit-animation-name: fadeOut;
+          animation-name: fadeOut;
+}*/
+
+@media screen and (min-width: 1200px) {
+  .ec_container {
+    width: 1000px;
+  }
+}

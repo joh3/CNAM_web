@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>E-Command - Le Pizzatologue</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/styles/main.style.css">
+
+  </head>
+  <body ng-app="ecApp" ng-controller="AppCtrl">
+
+    <header>
+      <!-- Barre de navigation -->
+      <ec-navbar id="navbar" basket-articles-quantity="mainBasketArticlesQuantity"></ec-navbar>
+    </header>
+
+    <div ng-view="" id="ec_body"></div>
+
+    <!-- Pied de page -->
+    <ec-footer></ec-footer>
+
+    <!-- bower:js -->
+    <script src="./bower_components/angular/angular.min.js"></script>
+    <script src="./bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="./bower_components/angular-css/angular-css.min.js"></script>
+    <script src="./bower_components/angular-route/angular-route.min.js"></script>
+    <script src="./bower_components/angular-animate/angular-animate.min.js"></script>
+    <!-- endbower -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="./app/app.module.js"></script>
+    <script src="./app/app.routes.js"></script>
+
+    <!-- Services -->
+    <script src="./app/components/address/address.service.js"></script>
+    <script src="./app/components/article/article.service.js"></script>
+    <script src="./app/components/basket/basket.service.js"></script>
+    <script src="./app/components/customer/customer.service.js"></script>
+    <script src="./app/components/category/category.service.js"></script>
+    <script src="./app/components/date-time/date-time.service.js"></script>
+    <script src="./app/components/order/order.service.js"></script>
+    <script src="./app/components/order-history/order-history.service.js"></script>
+    <script src="./app/components/shipping/shipping.service.js"></script>
+    
+    <!-- Directives -->
+    <script src="./app/shared/footer/footer.directive.js"></script>
+    <script src="./app/shared/navbar/navbar.directive.js"></script>
+    
+    <!-- Contrôleurs -->
+    <script src="./app/components/article/article.controller.js"></script>
+    <script src="./app/components/basket/basket.controller.js"></script>
+    <script src="./app/components/command-confirmation/command-confirmation.controller.js"></script>
+    <script src="./app/components/home/home.controller.js"></script>
+    <script src="./app/components/order-history/order-history.controller.js"></script>
+    <script src="./app/components/shipping/shipping.controller.js"></script>
+
+  </body>
+</html>
