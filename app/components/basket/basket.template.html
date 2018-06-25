@@ -1,0 +1,91 @@
+<div class="ec_container">
+    <!-- Fil d'ariane -->
+    <div class="ec_subcontainer" ng-controller="BasketCtrl">
+        <ol class="ec_container_breadcrumb" id="breadcrumb">
+            <li class="active"><a href="#!/panier">Panier</a></li>
+            <li><span ng-if="basketArticlesList.length === 0">Livraison</span><a href="#!/livraison" ng-if="basketArticlesList.length > 0">Livraison</a></li>
+            <li><span ng-if="basketArticlesList.length === 0">Confirmation</span><a href="#!/confirmation" ng-if="basketArticlesList.length > 0">Confirmation</a></li>
+        </ol>
+    </div>
+
+    <!-- Introduction panier de commande -->
+    <div class="ec_title">
+        <h1>Mon panier</h1>
+    </div>
+
+    <!-- Panier de commande -->
+    <div class="ec_subcontainer" ng-controller="BasketCtrl">
+        <div class="ec_container_basket">
+            <table id="basket">
+                <thead ng-show="basketArticlesList.length > 0">
+                    <tr>
+                        <th class="ec_th_feature"></th>
+                        <th class="ec_th_product">Produit</th>
+                        <th class="ec_th_quantity">Quantité</th>
+                        <th class="ec_th_unit_price">Prix unitaire</th>
+                        <th class="ec_th_total_line_price">Prix total</th>
+                    </tr>
+                </thead>
+                <tbody ng-show="basketArticlesList.length === 0">
+                    <tr>
+                        <td></td>
+                        <td colspan="4">
+                            <span class="prompt prompt_empty_title">Panier vide !</span>
+                            <span class="prompt prompt_empty_description">Vous pouvez sélectionner vos produits dans le <a href="#!/articles">catalogue</a>.</span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-show="basketArticlesList.length > 0">
+                    <tr ng-repeat="basketLine in basketArticlesList">
+                        <td class="ec_td_feature">
+                            <button class="cmd_retire_product" ng-click="removeArticle(basketLine)"><i class="fa fa-trash-alt"></i></button>
+                        </td>
+                        <td class="ec_td_product">
+                            <span class="product_name">{{basketLine.label}}</span>
+                            <span class="product_description">{{basketLine.description}}</span>
+                        </td>
+                        <td class="ec_td_quantity">
+                            <button class="cmd cmd_retire_unit" ng-click="downQuantity(basketLine)"><i class="fa fa-minus"></i></button>
+                            <span class="viewer_quantity">{{basketLine.quantity}}</span>
+                            <button class="cmd cmd_add_unit" ng-click="upQuantity(basketLine)"><i class="fa fa-plus"></i></button>
+                        </td>
+                        <td class="ec_td_unit_price">
+                            <span class="price_value">{{basketLine.unitPriceExcludingTaxFloatFormat}}</span>
+                            <span class="currency">€</span>
+                        </td>
+                        <td class="ec_td_total_line_price">
+                            <span class="price_value">{{basketLine.totalPriceExcludingTaxFloatFormat}}</span>
+                            <span class="currency">€</span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot ng-show="basketArticlesList.length > 0">
+                    <tr>
+                        <td colspan="2" class="ec_tf_empty"></td>
+                        <td colspan="2" class="ec_tf_label">Prix total HT</td>
+                        <td class="ec_tf_total_price">
+                            <span class="total_price">
+                                <span class="price_value">{{totalBasketCheckPriceExcludingTaxFloatFormat}}</span>
+                                <span class="currency">€</span>
+                            </span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="ec_subcontainer">
+        <div class="cmd_final">
+            <span></span>
+            <button class="btn_a disabled" ng-if="basketArticlesList.length === 0">
+                <span>Choisir mon mode de livraison</span>
+                <i class="fa fa-chevron-right"></i>
+            </button>
+            <a class="btn_a continue" href="#!/livraison" ng-if="basketArticlesList.length > 0">
+                <span>Choisir mon mode de livraison</span>
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        </div>
+    </div>
+</div>

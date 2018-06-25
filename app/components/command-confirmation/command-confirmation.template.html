@@ -1,0 +1,97 @@
+<div class="ec_container">
+    <!-- Fil d'ariane -->
+    <div class="ec_container_breadcrumb">
+        <ol class="ec_subcontainer" id="breadcrumb">
+            <li><a href="#!/panier">Panier</a></li>
+            <li><a href="#!/livraison">Livraison</a></li>
+            <li class="active"><a href="#!/confirmation">Confirmation</a></li>
+        </ol>
+    </div>
+
+    <!-- Introduction panier de commande -->
+    <div class="ec_title">
+        <h1>Confirmation</h1>
+    </div>
+
+    <!-- Panier de commande -->
+    <div class="ec_subcontainer" ng-controller="CommandConfirmationCtrl">
+        <div class="ec_container_basket">
+            <table id="basket">
+                <thead>
+                    <tr>
+                        <th class="ec_th_product">Produit</th>
+                        <th class="ec_th_quantity">Quantité</th>
+                        <th class="ec_th_unit_price">Prix unitaire</th>
+                        <th class="ec_th_total_line_price">Prix total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="basketLine in basketArticlesList">
+                        <td class="ec_td_product">
+                            <span class="product_name">{{basketLine.label}}</span>
+                            <span class="product_description">{{basketLine.description}}</span>
+                        </td>
+                        <td class="ec_td_quantity">
+                            <span class="viewer_quantity">{{basketLine.quantity}}</span>
+                        </td>
+                        <td class="ec_td_unit_price">
+                            <span class="price_value">{{basketLine.unitPriceExcludingTaxFloatFormat}}</span>
+                            <span class="currency">€</span>
+                        </td>
+                        <td class="ec_td_total_line_price">
+                            <span class="price_value">{{basketLine.totalPriceExcludingTaxFloatFormat}}</span>
+                            <span class="currency">€</span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="ec_tf_label">Prix total HT</td>
+                        <td class="ec_tf_total_price">
+                            <span class="total_price">
+                                <span class="price_value">{{totalBasketCheckPriceExcludingTaxFloatFormat}}</span>
+                                <span class="currency">€</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="ec_tf_label">Frais de livraison</td>
+                        <td class="ec_tf_total_price">
+                            <span class="total_price">
+                                <span class="price_value">{{shippingPriceLabel}}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="ec_tf_label">Frais de TVA</td>
+                        <td class="ec_tf_total_price">
+                            <span class="total_price">
+                                <span class="price_value">{{vatPriceFloatFormat}}</span>
+                                <span class="currency">€</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="ec_tf_label">Prix total TTC</td>
+                        <td class="ec_tf_total_price">
+                            <span class="total_price">
+                                <span class="price_value">{{totalBasketCheckPriceIncludingTaxFloatFormat}}</span>
+                                <span class="currency">€</span>
+                            </span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="ec_subcontainer">
+        <div class="cmd_final">
+            <span></span>
+            <a class="btn_a continue" href="commande-validee.html">
+                <span>Valider ma commande</span>
+                <i class="fa fa-chevron-right"></i>
+            </a>
+        </div>
+    </div>
+</div>

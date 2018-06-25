@@ -1,0 +1,151 @@
+#breadcrumb {
+    display: flex;
+    flex-direction: row;
+    margin-left: 15px;
+}
+
+#breadcrumb > li {
+    margin-right: 45px;
+    color: #CCCCCC;
+}
+#breadcrumb > li.active {
+    color: #000000;
+}
+#breadcrumb > li::after {
+    content: '>';
+    position: relative;
+    left: 10px;
+    color: #CCCCCC;
+}
+#breadcrumb > li:nth-child(3)::after {
+    content: '';
+}
+
+#breadcrumb > li > a {
+    text-decoration: none;
+    color: #CCCCCC;
+}
+#breadcrumb > li.active > a {
+    color: #000000;
+}
+.ec_container_breadcrumb {
+    padding-bottom: 0px;
+}
+.ec_container_basket {
+    padding-top: 0px;
+}
+
+/* Panier de commande */
+#basket {
+    width: 100%;
+    border-collapse: collapse;
+}
+    #basket thead tr th,
+    #basket tfoot tr td {
+        padding: 15px 7px;
+    }
+
+    /* En-tête */
+    #basket thead tr th {
+        border-bottom: 1px solid #CCCCCC;
+        font-weight: normal;
+        font-size: 14px;
+        text-align: left;
+        color: #777777;
+    }
+    #basket thead tr th.ec_th_feature {
+        border-bottom: transparent;
+    }
+    #basket thead tr th.ec_th_quantity {
+        text-align: center;
+    }
+    #basket thead tr th.ec_th_unit_price {
+        text-align: right;
+    }
+    
+    /* Corps */
+#basket tbody tr {
+    cursor: pointer;
+}
+#basket tbody tr.selectable:active,
+#basket tbody tr.selectable:focus {
+    background: #00BCD4;
+}
+#basket tbody tr.shipping_mode_selected,
+#basket tbody tr.shipping_mode_selected td.ec_td_unit_price {
+    background: #00BCD4;
+    color: #FFFFFF;
+}
+#basket tbody {
+    position: relative;
+}
+    #basket tbody tr td {
+        padding: 25px 7px;
+        font-size: 16px;
+    }
+    #basket tbody tr td.ec_td_illustration {
+        width: 140px;
+        font-size: 60px;
+    }
+        #basket tbody tr td.ec_td_shipping_mode .shipping_name {
+            display: block;
+            font-weight: bold;
+        }
+        #basket tbody tr td.ec_td_shipping_mode .shipping_description {
+            display: block;
+            width: calc(100% - 20px);
+            margin-top: 5px;
+            font-size: 14px;
+        }
+#basket tbody tr td.ec_td_unit_price {
+    text-align: right;
+    color: #555555;
+}
+#basket tbody tr.shipping_mode_address {
+    position: relative;
+    transition: all 0.2s ease;
+}
+#basket tbody tr.shipping_mode_address td.ec_td_empty:after {
+    content: '';
+    position: relative;
+    top: -35px;
+    left: 140px;
+    width: 0;
+    height: 0;
+    border-top: 20px solid #00BCD4;
+    border-right: 20px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 20px solid transparent;
+}
+    #basket tbody tr.shipping_mode_address td {
+        padding: 30px 5px;
+        border-top: 1px solid rgb(221, 221, 221);
+    }
+    #basket tbody tr.shipping_mode_address td.ec_td_empty {
+        border-top: transparent;
+    }
+        #basket tbody tr.shipping_mode_address td.ec_td_shipping_mode_address_choice .shipping_mode_label {
+            font-weight: bold;
+        }
+        #basket tbody tr.shipping_mode_address td.ec_td_shipping_mode_address_choice .details {
+            padding-top: 10px;
+        }
+            #basket tbody tr.shipping_mode_address td.ec_td_shipping_mode_address_choice .details > select {
+                margin-right: 20px;
+            }
+
+    /* Pied */
+    #basket tfoot tr td {
+        border-top: 1px solid #CCCCCC;
+    }
+        #basket tfoot tr td.ec_tf_label {
+            text-align: right;
+            font-weight: bold;
+            color: #555555;
+        }
+        #basket tfoot tr td.ec_tf_total_price {
+            width: 185px;
+            text-align: right;
+            font-weight: bold;
+            color: #555555;
+        }

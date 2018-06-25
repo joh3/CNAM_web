@@ -1,0 +1,79 @@
+/**
+ * E-COMMAND - Feuille de style
+ * Style de la page d'acceuil
+ */
+
+/**
+ * Bloc d'intro
+ */
+ #ec_intro {
+	height: 400px;
+	/*background: url('../images/bg-0001.jpg') no-repeat;*/
+	background: #2196F3;
+	background-size: 100%;
+}
+	#ec_intro .ec_container {
+        flex-direction: row;
+		justify-content: space-between;
+		height: 100%;
+		padding: 0;
+	}
+		#ec_intro .intro_text {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			width: 520px;
+		}
+			#ec_intro .intro_text h1 {
+				font-size: 30px;
+				color: #FFFFFF;
+			}
+			#ec_intro .intro_text p {
+				margin: 10px 0;
+			}
+			#ec_intro .intro_text button {
+				width: 300px;
+				margin: 10px 0;
+				padding: 15px;
+				font-size: 18px;
+			}
+		#ec_intro .intro_img {
+			width: 450px;
+		}
+
+/**
+ * Bloc de présentation du service
+ */
+.ec_possibilities {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+	.ec_possibilities .possibilities_steps {
+		display: flex;
+		flex-direction: column;
+		width: 30%;
+		border-radius: 4px;
+		box-shadow: 4px 4px 5px #dfdfdf;
+	}
+		.ec_possibilities .possibilities_steps > * {
+			background: #FFFFFF;
+			text-align: center;
+		}
+		.ec_possibilities .possibilities_steps i {
+			width: 100%;
+			font-size: 100px;
+			color: #363636;
+		}
+		.ec_possibilities .possibilities_steps span.libelle {
+			width: 100%;
+			border-radius: 4px;
+			padding: 20px 0;
+			font-size: 24px;
+			color: #363636;
+        }
+        
+
+.ec_possibilities {
+    margin: 20px 0;
+}

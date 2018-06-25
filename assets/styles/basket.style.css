@@ -1,0 +1,133 @@
+#breadcrumb {
+    display: flex;
+    flex-direction: row;
+    margin-left: 15px;
+}
+
+#breadcrumb > li {
+    margin-right: 45px;
+    color: #CCCCCC;
+}
+#breadcrumb > li.active {
+    color: #000000;
+}
+#breadcrumb > li::after {
+    content: '>';
+    position: relative;
+    left: 10px;
+    color: #CCCCCC;
+}
+#breadcrumb > li:nth-child(3)::after {
+    content: '';
+}
+
+#breadcrumb > li > a {
+    text-decoration: none;
+    color: #CCCCCC;
+}
+#breadcrumb > li.active > a {
+    color: #000000;
+}
+.ec_container_breadcrumb {
+    padding-bottom: 0px;
+}
+.ec_container_basket {
+    padding-top: 0px;
+}
+
+/* Panier de commande */
+#basket {
+    width: 100%;
+    border-collapse: collapse;
+}
+    #basket thead tr th,
+    #basket tfoot tr td {
+        padding: 15px 7px;
+    }
+
+    /* En-tête */
+    #basket thead tr th {
+        border-bottom: 1px solid #CCCCCC;
+        font-weight: normal;
+        font-size: 14px;
+        text-align: left;
+        color: #777777;
+    }
+    #basket thead tr th.ec_th_feature {
+        border-bottom: transparent;
+    }
+    #basket thead tr th.ec_th_quantity {
+        width: 160px;
+        text-align: center;
+    }
+    #basket thead tr th.ec_th_unit_price,
+    #basket thead tr th.ec_th_total_line_price {
+        text-align: right;
+    }
+    
+    /* Corps */
+    #basket tbody tr td {
+        padding: 25px 7px;
+        font-size: 16px;
+    }
+    #basket tbody tr td.ec_td_feature {
+        text-align: center;
+    }
+        #basket tbody tr td.ec_td_feature .cmd_retire_product {
+            border: transparent;
+            background: transparent;
+            color: #F44336;
+            font-size: 18px;
+            transition: all 0.4s ease;
+        }
+        #basket tbody tr td.ec_td_feature .cmd_retire_product:hover {
+            color: #35373B;
+        }
+    #basket tbody tr td.ec_td_product {
+        width: 600px;
+    }
+        #basket tbody tr td.ec_td_product .product_name {
+            display: block;
+            font-weight: bold;
+        }
+        #basket tbody tr td.ec_td_product .product_description {
+            display: block;
+            width: calc(100% - 20px);
+            margin-top: 5px;
+            font-size: 12px;
+        }
+    #basket tbody tr td.ec_td_quantity {
+        text-align: center;
+    }
+        #basket tbody tr td.ec_td_quantity .cmd {
+            border: #35373B;
+            background: #35373B;
+            font-size: 9px;
+            color: #FFFFFF;
+        }
+        #basket tbody tr td.ec_td_quantity .viewer_quantity {
+            display: inline-block;
+            width: 40px;
+            text-align: center;
+            color: #555555;
+        }
+    #basket tbody tr td.ec_td_unit_price,
+    #basket tbody tr td.ec_td_total_line_price {
+        text-align: right;
+        color: #555555;
+    }
+
+    /* Pied */
+    #basket tfoot tr td {
+        border-top: 1px solid #CCCCCC;
+    }
+        #basket tfoot tr td.ec_tf_label {
+            text-align: right;
+            font-weight: bold;
+            color: #555555;
+        }
+        #basket tfoot tr td.ec_tf_total_price {
+            text-align: right;
+            font-weight: bold;
+            color: #555555;
+        }
