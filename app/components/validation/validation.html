@@ -21,7 +21,7 @@ and open the template in the editor.
         <div class="panel-body">
             <h2>Liste des commandes à valider</h2>
             <div class="list-group" ng-repeat="cmd in validateCommands">
-                <a href="" class="list-group-item" id="{{cmd.idCommande}}" data-toggle="modal" data-target="#myModal" ng-click="validationCtrl.detailCmd($event)">
+                <a href="" class="list-group-item" id="{{cmd.idCommande}}" data-toggle="modal" data-target="#myModal" ng-click="validationCtrl.detailCmd(cmd.idCommande)">
                     <h4 class="list-group-item-heading">{{cmd.nom}} {{cmd.prenom}}</h4>
                     <p class="list-group-item-text">Commande du {{cmd.date| date:'dd-MM-yyyy HH:mm:ss'}}</p>
                     <p class="list-group-item-text">TOTAL TTC: {{cmd.prixTotalTTC}} €</p>

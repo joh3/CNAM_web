@@ -4,11 +4,10 @@
  * and open the template in the editor.
  */
 
-angular
-  .module('ValidationModule', [])
-.component('validation', {
+
+app.component('validation', {
     controllerAs: 'validationCtrl',
-    templateUrl: "./app/components/validation/validation.html",
+    templateUrl: "views/validation.html",
     controller: function (validationService, $scope, $timeout, $interval) {
 
         //recupère pour la première fois la liste des commandes à valider
@@ -18,6 +17,7 @@ angular
         $interval(function () {
             reloadData();
         }, 60000);
+
 
 
         //fonction qui récupère la liste des commandes à valider
@@ -75,12 +75,9 @@ angular
         };
 
         //details d'une commande
-        this.detailCmd = function (obj) {
-            var target = angular.element(obj.currentTarget);
-            this.actualId = target.attr('id');
-			console.log(this.actualId);
+        this.detailCmd = function (idCommande) {
+            this.actualId=idCommande;
             validationService.getCommandDetails(this.actualId).then(function (response) {
-                console.log(response.data);
                 if (response.data.length > 0) {
                     
 
@@ -90,7 +87,6 @@ angular
             });
 
             validationService.getClientDetails(this.actualId).then(function (response) {
-                console.log($scope.clientDetails);
                 $scope.clientDetails = response.data;
             });
 
