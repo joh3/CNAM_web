@@ -42,6 +42,11 @@ angular
         templateUrl: './app/components/basket/basket.template.html',
         css: './assets/styles/basket.style.css'
       })
+	  .when('/validation', {
+      template: '<validation></validation>',
+		//templateUrl: './app/components/validation/validation.html',
+        css: './assets/styles/validation.css'
+      })
       .otherwise({
         redirectTo: '/'
       });
