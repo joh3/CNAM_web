@@ -25,7 +25,7 @@ angular.module('validationService', [])
     };
 
     this.validerCommande = function (id) {
-        var res = $http.put(config.dataPath + 'majCommands', {etatCommande: 'Attribuée', idCommande: id});
+        var res = $http.post(config.dataPath + 'majCommands', {etatCommande: 'Attribuée', idCommande: id});
         return res;
     };
 
