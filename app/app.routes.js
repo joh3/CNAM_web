@@ -47,6 +47,11 @@ angular
 		//templateUrl: './app/components/validation/validation.html',
         css: './assets/styles/validation.css'
       })
+	  .when('/attribution', {
+      template: '<attribution></attribution>',
+		//templateUrl: './app/components/validation/validation.html',
+        css: './assets/styles/attribution.css'
+      })
       .otherwise({
         redirectTo: '/'
       });

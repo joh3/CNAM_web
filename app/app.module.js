@@ -34,7 +34,9 @@ angular
     'ecNavbar',
     'ecFooter',
 	'ValidationModule',
-	'validationService'
+	'validationService',
+	'AttributionModule',
+	'AttributionService'
   ])
   .constant('config', {
       dataPath: 'http://localhost:3000/'
