@@ -8,7 +8,10 @@
   },
   "author": "Kouassi Kouame",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "angular": "^1.7.2",
+    "socket.io": "^2.1.1"
+  },
   "devDependencies": {
     "grunt": "^1.0.3",
     "grunt-contrib-concat": "^1.0.1",

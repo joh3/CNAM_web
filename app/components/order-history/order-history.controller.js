@@ -8,7 +8,11 @@ angular
     $scope.orderOrganizationStatus = [{id: 1, label: "Toutes", active: true}, {id: 2, label: "Passées", possiblesValues: ["Livrée", "Non livrée", "Annulée"], active: false}, {id: 3, label: "En cours", possiblesValues: ["En cours"], active: false}];
     $scope.domain;
 
-    OrderHistoryFactory.getOrderHistoryByCustomer($scope.$parent.customer.id, getOrderHistoryByCustomerCallback);
+    //$scope.$watch("$parent.connectedCustomer.idCustomer", function(oldVal, newVal) {
+      if ($scope.$parent.connectedCustomer.idCustomer !== undefined) {
+        OrderHistoryFactory.getOrderHistoryByCustomer($scope.$parent.connectedCustomer.idCustomer, getOrderHistoryByCustomerCallback);
+      }
+    //});
 
     function getOrderHistoryByCustomerCallback(orderHistory) {
       var currentOrder;
@@ -26,6 +30,8 @@ angular
     }
 
     $scope.switchOrganizationStatus = function(idOrganizationStatus) {
+      //console.log($scope.orderOrganizationStatus.possiblesValues.indexOf(idOrganizationStatus))
+      //console.log($scope.domain.possiblesValues.indexOf($scope.order.status));
       angular.forEach($scope.orderOrganizationStatus, function(item) {
         if (item.id === idOrganizationStatus) {
           item.active = true;
@@ -33,7 +39,6 @@ angular
         } else {
           item.active = false;
         }
-        
       });
       //$scope.domain = ($scope.domain === HISTORY_PASSED) ? HISTORY_IN_PROGRESS : HISTORY_PASSED;
     };

@@ -76,6 +76,7 @@
     background: #00BCD4;
     color: #FFFFFF;
 }
+
 #basket tbody {
     position: relative;
 }
@@ -108,7 +109,7 @@
 #basket tbody tr.shipping_mode_address td.ec_td_empty:after {
     content: '';
     position: relative;
-    top: -35px;
+    top: -55px;
     left: 140px;
     width: 0;
     height: 0;
@@ -127,12 +128,24 @@
         #basket tbody tr.shipping_mode_address td.ec_td_shipping_mode_address_choice .shipping_mode_label {
             font-weight: bold;
         }
+        #basket tbody tr.shipping_mode_address td.ec_td_shipping_mode_address_choice .shipping_mode_explain {
+            display: block;
+            color: #777777;
+        }
+        #basket tbody tr.shipping_mode_address td.ec_td_shipping_mode_address_choice .shipping_mode_explain .great {
+            font-weight: bold;
+            color: #F44336;
+        }
         #basket tbody tr.shipping_mode_address td.ec_td_shipping_mode_address_choice .details {
             padding-top: 10px;
         }
             #basket tbody tr.shipping_mode_address td.ec_td_shipping_mode_address_choice .details > select {
                 margin-right: 20px;
             }
+
+        #basket tbody tr.shipping_mode_address td.ec_td_shipping_mode_address_choice .ec_shipping_address_name {
+            width: 500px;
+        }
 
     /* Pied */
     #basket tfoot tr td {

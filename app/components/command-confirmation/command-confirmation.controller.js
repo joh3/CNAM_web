@@ -38,6 +38,18 @@ angular
         };
 
         $scope.confirmCommand = function() {
+            var obj = {
+                adresse: $scope.$parent.connectedCustomer.address.address,
+                codePostal: $scope.$parent.connectedCustomer.address.zip,
+                ville: $scope.$parent.connectedCustomer.address.city,
+                prixTotalHT: $scope.totalBasketCheckPriceExcludingTax,
+                prixTotalTTC: $scope.totalBasketCheckPriceIncludingTax,
+                idClient: $scope.$parent.connectedCustomer.idCustomer,
+                article: $scope.basketArticlesList
+            };
+
+            BasketFactory.confirmCommand(obj);
+
             $scope.isCommandConfirmed = true;
         };
 

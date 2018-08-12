@@ -10,10 +10,6 @@ angular.module('AddressService', [])
             this.city = city;
         }
 
-        Address.getAddressByIdCallback = function(address) {
-            return this.buildFR(address);
-        }
-
         Address.build = function(data) {
             return new Address(
                 data.idAddress,
@@ -35,17 +31,17 @@ angular.module('AddressService', [])
         return Address;
 
     })
-    .factory('AddressFactory', function($http, config) {
+    /*.factory('AddressFactory', function($http, config, AddressModel) {
 
         var address = {};
 
         address.getAddressById = function(idAddress, callback) {
-            $http.get(config + 'adresse/' + idAddress)
+            $http.get(config.dataPath + 'adresse/' + idAddress)
                 .then(function(response) {
-                    callback(response.data);
+                    callback(response.data[0]);
                 });
         };
 
         return address;
 
-    });
+    });*/

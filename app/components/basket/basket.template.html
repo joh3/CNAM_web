@@ -78,14 +78,14 @@
     <div class="ec_subcontainer">
         <div class="cmd_final">
             <span></span>
-            <button class="btn_a disabled" ng-if="basketArticlesList.length === 0">
+            <button data-ng-class="basketArticlesListIsEmpty()" ng-click="nextStep()" class="btn_a">
                 <span>Choisir mon mode de livraison</span>
                 <i class="fa fa-chevron-right"></i>
             </button>
-            <a class="btn_a continue" href="#!/livraison" ng-if="basketArticlesList.length > 0">
+            <!--a class="btn_a continue" href="#!/livraison">
                 <span>Choisir mon mode de livraison</span>
                 <i class="fa fa-chevron-right"></i>
-            </a>
+            </a-->
         </div>
     </div>
 </div>

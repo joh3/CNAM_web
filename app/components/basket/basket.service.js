@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('BasketService', ['ngCookies'])
-    .factory('BasketFactory', function($cookies, ShippingFactory) {
+    .factory('BasketFactory', function($cookies, ShippingFactory, $http) {
 
         var basket = [];
         var basketService = {};
@@ -137,6 +137,25 @@ angular.module('BasketService', ['ngCookies'])
                 basketQtyBeforeAddition += element.quantity;
             });
             return basketQtyBeforeAddition;
+        };
+
+        basketService.confirmCommand = function(obj) {
+            var url = 'http://localhost:3000/';
+            var objJSON = angular.toJson(obj, true);
+
+            console.log(obj.article[0].idArticle);
+            
+            /*$http({
+                method: 'POST',
+                url: url + "addCmd",
+                data: angular.toJson(obj, true),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })*/
+
+            $http.post(url + 'addCmd', obj)
+                .then(function(data) {
+                    console.log(data);
+                });
         };
 
         /*basketService.notifyQuantityChangement = function(basketQtyBeforeAddition, basketQtyAfterAddition) {

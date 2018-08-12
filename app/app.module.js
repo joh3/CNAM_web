@@ -20,6 +20,7 @@ angular
     'CategoryService',
     'CustomerService',
     'DateTimeService',
+    'GoogleMapsOverrideService',
     'OrderService',
     'OrderHistoryService',
     'ShippingService',
@@ -33,19 +34,51 @@ angular
     'ecFooter'
   ])
   .constant('config', {
-      dataPath: 'http://localhost:3000/'
+    API_KEY: 'AIzaSyAaojRfzhFQENpxLM9W8zpKOLf4D0SaLGY',
+    dataPath: 'http://localhost:3000/'
   })
-  .controller('AppCtrl', function($scope, BasketFactory, CustomerFactory) {
+  .controller('AppCtrl', function($q, $scope, AddressModel, CustomerFactory, CustomerModel) {
 
+    // API Key
+    //console.log(config.API_KEY);
+    $scope.api_key = 'AIzaSyAaojRfzhFQENpxLM9W8zpKOLf4D0SaLGY';
+    var idCus = 1;
+
+    // Nombre d'articles
     $scope.mainBasketArticlesQuantity;
-    //console.log($scope.mainBasketArticlesQuantity);
-
-    /*if ($scope.mainBasketArticlesQuantity === undefined) {
-      $scope.mainBasketArticlesQuantity = BasketFactory.getBasketArticlesQuantity();
-    }*/
+    $scope.connectedCustomer = {};
+    $scope.connectedCustomerAddress;
 
     // Client
-    $scope.customer = {id: 1, firstname: "Jean-Rachid", lastname: "Selema"};
-    //CustomerFactory.getCustomerById(1);
+    CustomerFactory.getCustomerById(idCus, getCustomerByIdCallback);
+
+    function getCustomerByIdCallback (customer) {
+      //console.log(customer)
+      
+      $scope.connectedCustomer = customer;
+      $scope.connectedCustomer.miniature = './assets/images/various/default-user-miniature.png';
+      $scope.connectedCustomer = $scope.connectedCustomer;
+    }
+
+    function isImage(src) {
+
+      var deferred = $q.defer();
+  
+      var image = new Image();
+      image.onerror = function() {
+          deferred.resolve(false);
+      };
+      image.onload = function() {
+          deferred.resolve(true);
+      };
+      image.src = src;
+  
+      return deferred.promise;
+    }
     
-  });
+  })
+  .filter('capitalizeWord', function() {
+    return function(text) {
+      return (!!text) ? text.charAt(0).toUpperCase() + text.substr(1).toLowerCase() : '';
+    }
+});

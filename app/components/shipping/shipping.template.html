@@ -42,14 +42,11 @@
                         <td class="ec_td_empty"></td>
                         <td class="ec_td_shipping_mode_address_choice" colspan="2">
                             <span class="shipping_mode_label">Adresse de livraison</span>
+                            <span class="shipping_mode_explain"><span class="great">Attention !</span> La livraison est uniquement possible pour les adresses placées à 10km maximum de notre Pizzeria.</span>
                             <div class="details">
-                                <select name="ec_shipping_address_name">
-                                    <option value="Domicile" selected="selected">Domicile</option>
-                                    <option value="Travail">Travail</option>
-                                </select>
-                                <button class="add">
-                                    <i class="fa fa-plus"></i> 
-                                    <span>Ajouter une adresse de livraison</span>
+                                <input type="text" class="ec_shipping_address_name" ng-model="customerProvidedAddress" />
+                                <button class="add" ng-click="checkEligiblility(customerProvidedAddress)">
+                                    <span>Vérifier éligibilité</span>
                                 </button>
                             </div>
                         </td>
@@ -67,16 +64,21 @@
                     </tr>
                 </tfoot>
             </table>
+            <div id="map"></div>
         </div>
     </div>
 
     <div class="ec_subcontainer">
         <div class="cmd_final">
             <span></span>
-            <a class="btn_a continue" href="#!/confirmation">
+            <button data-ng-class="checkSelected()" ng-click="nextStep()" class="btn_a">
                 <span>Confirmer ma commande</span>
                 <i class="fa fa-chevron-right"></i>
-            </a>
+            </button>
+            <!--a class="btn_a continue" href="#!/confirmation">
+                <span>Confirmer ma commande</span>
+                <i class="fa fa-chevron-right"></i>
+            </a-->
         </div>
     </div>
 </div>

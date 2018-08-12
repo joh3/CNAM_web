@@ -2,11 +2,12 @@
 
 angular
   .module('BasketModule', [])
-  .controller('BasketCtrl', function($scope, $rootScope, BasketFactory) {
+  .controller('BasketCtrl', function($scope, $location, $rootScope, BasketFactory) {
 
     $scope.basketArticlesList = BasketFactory.getBasketContent();     // Panier de commande
     $scope.totalBasketCheckPriceExcludingTax = 0;                     // Prix total HT
     $scope.totalBasketCheckPriceExcludingTaxFloatFormat = '';       // Prix total HT au format 'Float'
+    $scope.basketArticlesListIsEmpty;
 
     /**
      * Calcule le prix HT de chaque ligne et le prix total HT du panier
@@ -42,7 +43,18 @@ angular
 
     $scope.$watchCollection('basketArticlesList', function() {
       $scope.calculateBasketCheck();
+      $scope.basketArticlesListIsEmpty
     }, true);
+
+    $scope.basketArticlesListIsEmpty = function() {
+      return ($scope.basketArticlesList.length > 0) ? 'continue' : 'disabled';
+    };
+
+    $scope.nextStep = function() {
+      if ($scope.basketArticlesList.length > 0) {
+        $location.path("/livraison");
+      }
+    };
 
     $scope.$watch('basketArticlesList.length', function() {
       //console.log($rootScope);

@@ -16,7 +16,7 @@
 
     <header>
       <!-- Barre de navigation -->
-      <ec-navbar id="navbar" basket-articles-quantity="mainBasketArticlesQuantity"></ec-navbar>
+      <ec-navbar id="navbar" basket-articles-quantity="mainBasketArticlesQuantity" connected-customer="connectedCustomer"></ec-navbar>
     </header>
 
     <div ng-view="" id="ec_body"></div>
@@ -30,6 +30,8 @@
     <script src="./bower_components/angular-css/angular-css.min.js"></script>
     <script src="./bower_components/angular-route/angular-route.min.js"></script>
     <script src="./bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
     <!-- endbower -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -43,9 +45,22 @@
     <script src="./app/components/customer/customer.service.js"></script>
     <script src="./app/components/category/category.service.js"></script>
     <script src="./app/components/date-time/date-time.service.js"></script>
+    <script src="./app/components/google-maps-override/google-maps-override.service.js"></script>
     <script src="./app/components/order/order.service.js"></script>
     <script src="./app/components/order-history/order-history.service.js"></script>
     <script src="./app/components/shipping/shipping.service.js"></script>
+    <!-- &callback=initMap" async defer -->
+    <script ng-if="on_shipping_page !== undefined" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAaojRfzhFQENpxLM9W8zpKOLf4D0SaLGY"></script>
+    <script>
+      function initMap() {} // now it IS a function and it is in global
+      $(() => {
+        initMap = function() {
+          // your code like...
+          var map = new google.maps.Map(document.getElementById('map'), {/*your code*/});
+          // and other stuff...
+        }
+      })
+    </script>
     
     <!-- Directives -->
     <script src="./app/shared/footer/footer.directive.js"></script>

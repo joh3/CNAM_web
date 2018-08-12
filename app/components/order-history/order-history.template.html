@@ -47,28 +47,24 @@
                                 <th class="th_product_quantity">Quantité</th>
                                 <th class="th_product_product_name">Produit</th>
                                 <th class="th_empty"></th>
-                                <!--th class="th_product_unit_price">Prix unitaire HT</th>
-                                <th class="th_product_total_price">Prix total</th-->
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-ng-repeat="product in articles">
+                            <tr ng-repeat="product in articles">
                                 <td class="td_product_quantity">{{product.quantity}}</td>
                                 <td class="td_product_product_name">{{product.label}}</td>
                                 <td class="td_empty"></td>
                             </tr>
-                            <!--tr>
+                            <tr>
                                 <td class="td_product_quantity">1</td>
                                 <td class="td_product_product_name">Pizza Steak</td>
-                                <td class="td_product_unit_price">
-                                    <span class="price_value">14.00</span>
-                                    <span class="currency">€</span>
-                                </td>
-                                <td class="td_product_total_price">
-                                    <span class="price_value">14.00</span>
-                                    <span class="currency">€</span>
-                                </td>
-                            </tr-->
+                                <td class="td_empty"></td>
+                            </tr>
+                            <tr>
+                                <td class="td_product_quantity">2</td>
+                                <td class="td_product_product_name">Pizza Mongelli</td>
+                                <td class="td_empty"></td>
+                            </tr>
                         </tbody>
                         <tfoot>
                             <tr>
@@ -80,23 +76,6 @@
                                     </span>
                                 </td>
                             </tr>
-                            <!--tr>
-                                <td colspan="2" class="ec_tf_label">Frais de livraison</td>
-                                <td class="ec_tf_total_price">
-                                    <span class="total_price">
-                                        <span class="price_value">3.50 €</span>
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" class="ec_tf_label">Frais de TVA</td>
-                                <td class="ec_tf_total_price">
-                                    <span class="total_price">
-                                        <span class="price_value">4.20</span>
-                                        <span class="currency">€</span>
-                                    </span>
-                                </td>
-                            </tr-->
                             <tr>
                                 <td colspan="2" class="ec_tf_label">Prix total TTC</td>
                                 <td class="ec_tf_total_price">

@@ -27,10 +27,10 @@
         <li>
             <a href="#">
                 <span class="identity">
-                    <span class="lastname">Selema</span>
-                    <span class="firstname">Jean-Rachid</span>
+                    <span class="lastname">{{connectedCustomer.lastname}}</span>
+                    <span class="firstname">{{connectedCustomer.firstname | capitalizeWord}}</span>
                 </span>
-                <img class="profile_picture" src="./assets/images/various/user-0001.png" alt="profile-picture" />
+                <img class="profile_picture" ng-src="{{connectedCustomer.miniature}}" alt="profile-picture" />
             </a>
         </li>
     </ul>

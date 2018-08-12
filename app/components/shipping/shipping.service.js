@@ -12,6 +12,7 @@ angular.module('ShippingService', ['ngCookies'])
         shippingService.getShippingModes = function() {
             return shippingMode;
         };
+        //$cookies.remove('ecShippingModeSelected');
 
         shippingService.selectShippingMode = function(shippingMode) {
             shippingModeSelected = shippingMode;

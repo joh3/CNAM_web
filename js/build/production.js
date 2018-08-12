@@ -384,10 +384,14 @@ angular
     'ngRoute',
     'ngAnimate',
     'angularCSS',
+    'AddressService',
     'ArticleService',
     'BasketService',
     'CategoryService',
     'CustomerService',
+    'DateTimeService',
+    'OrderService',
+    'OrderHistoryService',
     'ShippingService',
     'HomeModule',
     'ArticleModule',
@@ -399,22 +403,55 @@ angular
     'ecFooter'
   ])
   .constant('config', {
-      dataPath: 'http://localhost:3000/'
+    API_KEY: 'AIzaSyAaojRfzhFQENpxLM9W8zpKOLf4D0SaLGY',
+    dataPath: 'http://localhost:3000/'
   })
-  .controller('AppCtrl', function($scope, BasketFactory) {
+  .controller('AppCtrl', function($scope, CustomerFactory, $q) {
 
+    // API Key
+    //console.log(config.API_KEY);
+    $scope.api_key = 'AIzaSyAaojRfzhFQENpxLM9W8zpKOLf4D0SaLGY';
+
+    // Nombre d'articles
     $scope.mainBasketArticlesQuantity;
-    //console.log($scope.mainBasketArticlesQuantity);
-
-    /*if ($scope.mainBasketArticlesQuantity === undefined) {
-      $scope.mainBasketArticlesQuantity = BasketFactory.getBasketArticlesQuantity();
-    }*/
+    $scope.connectedCustomer = {};
 
     // Client
-    //CustomerFactory.getCustomerById(1);
-    
-  });
+    CustomerFactory.getCustomerById(1, getCustomerByIdCallback);
 
+    function getCustomerByIdCallback (customer) {
+      $scope.connectedCustomer = customer;
+      $scope.connectedCustomer.miniature = './assets/images/various/default-user-miniature.png';
+      console.log($scope.connectedCustomer);
+      /*isImage('./assets/images/customers/' + $scope.connectedCustomer.idCustomer + '.png')
+        .then(function(test) {
+          $scope.connectedCustomer.miniature = './assets/images/various/default-user-miniature.png';
+          //$scope.connectedCustomer.miniature = (test) ? './assets/images/customers/' + $scope.connectedCustomer.idCustomer + '.png' : './assets/images/various/default-user-miniature.png';
+        });*/
+    }
+
+    function isImage(src) {
+
+      var deferred = $q.defer();
+  
+      var image = new Image();
+      image.onerror = function() {
+          deferred.resolve(false);
+      };
+      image.onload = function() {
+          deferred.resolve(true);
+      };
+      image.src = src;
+  
+      return deferred.promise;
+    }
+    
+  })
+  .filter('capitalizeWord', function() {
+    return function(text) {
+      return (!!text) ? text.charAt(0).toUpperCase() + text.substr(1).toLowerCase() : '';
+    }
+});
 'use strict';
 
 /**
@@ -508,7 +545,7 @@ angular.module('ArticleService', ['ngCookies', 'BasketService', 'CategoryService
 
         return Article;
     })
-    .factory('ArticleFactory', function($http, config, BasketFactory, ArticleModel) {
+    .factory('ArticleFactory', function($http, config, ArticleModel) {
 
         var articleService = {};
          
@@ -710,8 +747,8 @@ angular.module('BasketService', ['ngCookies'])
     });
 'use strict';
 
-angular.module('CustomerService', [])
-    .factory('CustomerModel', function() {
+angular.module('CustomerService', ['AddressService'])
+    .factory('CustomerModel', function(AddressModel, AddressFactory) {
 
         function Customer(idCustomer, lastname, firstname, email, phoneNumber, idAddress) {
             this.idCustomer = idCustomer;
@@ -719,7 +756,12 @@ angular.module('CustomerService', [])
             this.firstname = firstname;
             this.email = email;
             this.phoneNumber = phoneNumber;
-            this.idAddress = idAddress;
+            this.address;
+            this.address = AddressFactory.getAddressById(idAddress, getAddressByIdCallback);
+        }
+
+        function getAddressByIdCallback(address) {
+            this.address = AddressModel.buildFR(address);
         }
 
         Customer.built = function(data)
@@ -744,7 +786,7 @@ angular.module('CustomerService', [])
         customerService.getCustomerById = function(idCustomer, callback) {
             $http.get(config.dataPath + 'client/' + idCustomer)
                 .then(function(response) {
-                    console.log(CustomerModel.built(response.data[0]));
+                    //console.log(response.data[0]);
                     callback(CustomerModel.built(response.data[0]));
                 });
         };
@@ -806,6 +848,7 @@ angular.module('ShippingService', ['ngCookies'])
         shippingService.getShippingModes = function() {
             return shippingMode;
         };
+        //$cookies.remove('ecShippingModeSelected');
 
         shippingService.selectShippingMode = function(shippingMode) {
             shippingModeSelected = shippingMode;
@@ -825,7 +868,7 @@ angular.module('ShippingService', ['ngCookies'])
 'use strict';
 
 angular
-    .module('ecFooter', ['angularCSS'])
+    .module('ecFooter', [])
     .directive('ecFooter', function() {
         return {
             restrict: 'E',
@@ -843,18 +886,15 @@ angular
             templateUrl: './app/shared/navbar/navbar.template.html',
             css: './assets/styles/navbar.style.css',
             scope: {
-                basketArticlesQuantity: '='
+                basketArticlesQuantity: '=',
+                connectedCustomer: '='
             }
         };
     });
 'use strict';
 
 angular
-  .module('ArticleModule', [
-    'ngRoute',
-    'ArticleService',
-    'BasketService'
-  ])
+  .module('ArticleModule', [])
   .controller('ArticleListCtrl', function($scope, $rootScope, ArticleFactory, BasketFactory) {
 
     $scope.init = function() {
@@ -942,15 +982,13 @@ angular
 'use strict';
 
 angular
-  .module('BasketModule', [
-    'ngRoute',
-    'BasketService'
-  ])
-  .controller('BasketCtrl', function($scope, $rootScope, BasketFactory) {
+  .module('BasketModule', [])
+  .controller('BasketCtrl', function($scope, $location, $rootScope, BasketFactory) {
 
     $scope.basketArticlesList = BasketFactory.getBasketContent();     // Panier de commande
     $scope.totalBasketCheckPriceExcludingTax = 0;                     // Prix total HT
     $scope.totalBasketCheckPriceExcludingTaxFloatFormat = '';       // Prix total HT au format 'Float'
+    $scope.basketArticlesListIsEmpty;
 
     /**
      * Calcule le prix HT de chaque ligne et le prix total HT du panier
@@ -986,7 +1024,18 @@ angular
 
     $scope.$watchCollection('basketArticlesList', function() {
       $scope.calculateBasketCheck();
+      $scope.basketArticlesListIsEmpty
     }, true);
+
+    $scope.basketArticlesListIsEmpty = function() {
+      return ($scope.basketArticlesList.length > 0) ? 'continue' : 'disabled';
+    };
+
+    $scope.nextStep = function() {
+      if ($scope.basketArticlesList.length > 0) {
+        $location.path("/livraison");
+      }
+    };
 
     $scope.$watch('basketArticlesList.length', function() {
       //console.log($rootScope);
@@ -997,18 +1046,24 @@ angular
   });
 'use strict';
 
-angular.module('HomeModule', ['ngRoute'])
-  .controller('HomeCtrl', [function() {
+angular
+  .module('HomeModule', [])
+  .controller('HomeCtrl', function() {
 
-  }]);
+  });
 'use strict';
 
 angular
-    .module('ShippingModule', [
-        'ngRoute',
-        'ShippingService'
-      ])
-    .controller('ShippingCtrl', ['$scope', 'ShippingFactory', function($scope, ShippingFactory) {
+    .module('ShippingModule', [])
+    .controller('ShippingCtrl', function($scope, $location, ShippingFactory) {
+
+        $scope.on_shipping_page = true;
+
+        var latlng = new google.maps.LatLng(43.5655445, 1.457051);
+        $scope.map = new google.maps.Map(document.getElementById('map'), {
+            center: latlng,
+            zoom: 8
+          });
 
         $scope.shippingModes = ShippingFactory.getShippingModes();
         $scope.shippingModeSelected = ShippingFactory.getShippingModeSelected();
@@ -1031,15 +1086,32 @@ angular
             }
         };
 
-    }]);
+        $scope.nextStep = function() {
+          if ($scope.shippingModeSelected !== null) {
+            $location.path("/confirmation");
+          }
+        };
+
+        $scope.checkSelected = function() {
+            //console.log($scope.shippingModeSelected !== null);
+            return ($scope.shippingModeSelected !== null) ? 'continue' : 'disabled';
+        };
+
+        /*$scope.$watch('shippingModeSelected', function(newV, old) {
+
+            if (newV !== null) {
+                $scope.checkSelected();
+            }
+        });*/
+
+        // Sélection de l'adresse
+
+    });
 'use strict';
 
 angular
-    .module('CommandConfirmationModule', [
-        'ngRoute',
-        'BasketService'
-      ])
-    .controller('CommandConfirmationCtrl', ['$scope', 'BasketFactory', function($scope, BasketFactory) {
+    .module('CommandConfirmationModule', [])
+    .controller('CommandConfirmationCtrl', function($scope, BasketFactory) {
 
         $scope.basketArticlesList = BasketFactory.getBasketContent();     // Panier de commande
         $scope.totalBasketCheckPriceExcludingTax = 0;                         // Prix total HT
@@ -1077,50 +1149,5 @@ angular
         $scope.confirmCommand = function() {
             $scope.isCommandConfirmed = true;
         };
-        
-        /*$scope.prixTotalHT = 0;
-        $scope.prixTotalHTFloat = '';
-        $scope.fraisLivraisonLibelle = '';
-        $scope.fraisLivraison = 0;
-        $scope.fraisTVA = 0;
-        $scope.fraisTVAFloat = '';
-        $scope.prixTotalTTC = 0;
-        $scope.prixTotalTTCFloat = '';
 
-        $scope.basketArticlesList.forEach(element => {
-            // Prix unitaire HT en Float - Format '1.00'
-            element.unitPriceExcludingTaxFloatFormat = BasketFactory.getFloatPrice(element.unitPriceExcludingTax);
-    
-            // Prix total HT par ligne
-            element.prixTotalLigne = (element.unitPriceExcludingTax * element.quantite);
-            element.prixTotalLigneFloat = BasketFactory.getFloatPrice(element.prixTotalLigne);
-
-            // Frais de TVA
-            element.fraisTVALigne = (element.prixTotalLigne / 100 * element.taux);
-            
-            // Prix total HT du panier
-            $scope.prixTotalHT += element.prixTotalLigne;
-            $scope.fraisTVA += element.fraisTVALigne;
-
-        });
-
-        $scope.fraisTVAFloat = BasketFactory.getFloatPrice($scope.fraisTVA);
-    
-        // Prix total HT du panier en Float
-        $scope.prixTotalHTFloat = BasketFactory.getFloatPrice($scope.prixTotalHT);
-
-        // Frais de livraison
-        if (ShippingFactory.getShippingModeSelected().frais === "Gratuit") {
-            $scope.fraisLivraisonLibelle = ShippingFactory.getShippingModeSelected().frais;
-            $scope.fraisLivraison = 0;
-        } else {
-            $scope.fraisLivraisonLibelle = ShippingFactory.getShippingModeSelected().frais;
-            $scope.fraisLivraison = BasketFactory.getFloatPrice(ShippingFactory.getShippingModeSelected().frais);
-        }
-
-        $scope.prixTotalTTC += parseFloat($scope.prixTotalHT);
-        $scope.prixTotalTTC += parseFloat($scope.fraisLivraison);
-        $scope.prixTotalTTC += parseFloat($scope.fraisTVA);
-        $scope.prixTotalTTCFloat = BasketFactory.getFloatPrice($scope.prixTotalTTC);*/
-
-    }]);
+    });

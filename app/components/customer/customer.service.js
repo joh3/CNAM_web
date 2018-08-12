@@ -1,18 +1,18 @@
 'use strict';
 
-angular.module('CustomerService', [])
-    .factory('CustomerModel', function() {
+angular.module('CustomerService', ['AddressService'])
+    .factory('CustomerModel', function(AddressModel) {
 
-        function Customer(idCustomer, lastname, firstname, email, phoneNumber, idAddress) {
+        function Customer(idCustomer, lastname, firstname, email, phoneNumber, idAddress, address, zip, city) {
             this.idCustomer = idCustomer;
             this.lastname = lastname;
             this.firstname = firstname;
             this.email = email;
             this.phoneNumber = phoneNumber;
-            this.idAddress = idAddress;
+            this.address = AddressModel.build({idAddress, address, zip, city});
         }
 
-        Customer.built = function(data)
+        Customer.buildFR = function(data)
         {
             return new Customer(
                 data.idClient,
@@ -20,7 +20,10 @@ angular.module('CustomerService', [])
                 data.prenom,
                 data.email,
                 data.numTel,
-                data.idAdresse
+                data.idAdresse,
+                data.Adresse,
+                data.codePostal,
+                data.ville
             );
         };
 
@@ -34,8 +37,7 @@ angular.module('CustomerService', [])
         customerService.getCustomerById = function(idCustomer, callback) {
             $http.get(config.dataPath + 'client/' + idCustomer)
                 .then(function(response) {
-                    console.log(CustomerModel.built(response.data[0]));
-                    callback(CustomerModel.built(response.data[0]));
+                    callback(CustomerModel.buildFR(response.data[0]));
                 });
         };
 
