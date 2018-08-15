@@ -13,36 +13,44 @@
         <div class="ec_container_order_history">
             
             <div class="an_order" ng-repeat="order in orderHistoryList[domain].orders" ng-class="{'active': order.active === true, 'ended': order.status === 'Livrée', 'in_progress': order.status === 'Validée' || order.status === 'Attribuée' || order.status === 'En cours de livraison', 'canceled': order.status === 'Non livrée' || order.status === 'Annulée'}">
-                <div class="an_order_header" ng-click="dropdownOrder(order.idOrder)">
-                    <div class="order_number">
-                        <span class="order_number_label">Commande n°</span>
-                        <span class="order_number_value">{{order.idOrder}}</span>
-                    </div>
-                    <div class="order_status">
-                        <span class="order_status_icon" ng-switch="order.status">
-                            <i ng-switch-when="Validée" class="fas fa-spinner"></i>
-                            <i ng-switch-when="Attribuée" class="fas fa-spinner"></i>
-                            <i ng-switch-when="En cours de livraison" class="fas fa-spinner"></i>
-                            <i ng-switch-when="Livrée" class="fas fa-check-circle"></i>
-                            <i ng-switch-when="Non livrée" class="fas fa-times-circle "></i>
-                            <i ng-switch-when="Annulée" class="fas fa-times-circle "></i>
-                        </span>
-                        <span class="order_status_label">{{order.status}}</span>
-                    </div>
-                    <div class="order_time">
-                        <div class="order_date">
-                            <span class="order_date">{{order.date}}</span>
+                <div class="an_order_header">
+                    
+                    <div class="an_order_info">
+                        <div class="order_number">
+                            <span class="order_number_label">Commande n°</span>
+                            <span class="order_number_value">{{order.idOrder}}</span>
                         </div>
-                        <div class="order_hour">
-                            <span class="order_hour_label">à</span>
-                            <span class="order_hour">{{order.time}}</span>
+                        <div class="order_status">
+                            <span class="order_status_icon" ng-switch="order.status">
+                                <i ng-switch-when="Validée" class="fas fa-spinner"></i>
+                                <i ng-switch-when="Attribuée" class="fas fa-spinner"></i>
+                                <i ng-switch-when="En cours de livraison" class="fas fa-spinner"></i>
+                                <i ng-switch-when="Livrée" class="fas fa-check-circle"></i>
+                                <i ng-switch-when="Non livrée" class="fas fa-times-circle "></i>
+                                <i ng-switch-when="Annulée" class="fas fa-times-circle "></i>
+                            </span>
+                            <span class="order_status_label">{{order.status}}</span>
+                        </div>
+                        <div class="order_time">
+                            <div class="order_date">
+                                <span class="order_date">{{order.date}}</span>
+                            </div>
+                            <div class="order_hour">
+                                <span class="order_hour_label">à</span>
+                                <span class="order_hour">{{order.time}}</span>
+                            </div>
+                        </div>
+                        <div class="order_shipping">
+                            <span class="order_shipping_address">{{order.address.address}}</span>
+                            <span class="order_shipping_zip">{{order.address.zip}}</span>
+                            <span class="order_shipping_city">{{order.address.city}}</span>
                         </div>
                     </div>
-                    <div class="order_shipping">
-                        <span class="order_shipping_address">{{order.address.address}}</span>
-                        <span class="order_shipping_zip">{{order.address.zip}}</span>
-                        <span class="order_shipping_city">{{order.address.city}}</span>
+                    <div class="an_order_actions">
+                        <button class="btn_a confirm" ng-if="order.status === 'Validée' || order.status === 'Attribuée' || order.status === 'En cours de livraison'">Suivre la commande</button>
+                        <button class="btn_a neutral_reverse" ng-click="dropdownOrder(order.idOrder)">Afficher les articles</button>
                     </div>
+
                 </div>
                 <div class="an_order_body">
                     <table class="order_products_list">

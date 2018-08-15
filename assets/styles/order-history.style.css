@@ -38,18 +38,32 @@
 
 .an_order .an_order_header {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     background: #F2F2F2;
-    padding: 40px;
     cursor: pointer;
     transition: all 0.4s ease;
+}
+    .an_order .an_order_header .an_order_info {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 40px;
+    }
+    .an_order .an_order_header .an_order_actions {
+        display: flex;
+        flex-direction: row-reverse;
+        width: 100%;
+        padding: 0;
+    }
+
+.btn_follow_order {
+    z-index: 9999999;
 }
 
 .an_order .an_order_header:hover {
     background: #F7F7F7;
 }
 
-.an_order .an_order_header::after {
+/*.an_order .an_order_header::after {
     content: '';
     position: relative;
     top: 80px;
@@ -57,7 +71,7 @@
     height: 0;
     border: 20px solid transparent;
     transition: all 0.4s ease;
-}
+}*/
 .an_order.active .an_order_header::after {
     border-top: 20px solid #F2F2F2;
 }

@@ -183,6 +183,18 @@ a.neutral:hover {
   background-color: #363636;
   color: #FFFFFF;
 }
+button.neutral_reverse,
+a.neutral_reverse {
+  border-color: #363636;
+  background-color: #363636;
+  color: #FFFFFF;
+}
+button.neutral_reverse:hover,
+a.neutral_reverse:hover {
+  border-color: #dcdcdc;
+  background-color: #dcdcdc;
+  color: #363636;
+}
 
 .underline { text-decoration: underline; }
 
