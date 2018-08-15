@@ -12,7 +12,11 @@ angular
         //console.log(GMO)
 
         $scope.on_shipping_page = true;
-        $scope.customerProvidedAddress = $scope.$parent.connectedCustomer.address.address + " " + $scope.$parent.connectedCustomer.address.zip + " " + $scope.$parent.connectedCustomer.address.city;
+        var text = "";
+        if ($scope.$parent.connectedCustomer.address.address !== undefined && $scope.$parent.connectedCustomer.address.zip !== undefined && $scope.$parent.connectedCustomer.address.city !== undefined) {
+            text = $scope.$parent.connectedCustomer.address.address + " " + $scope.$parent.connectedCustomer.address.zip + " " + $scope.$parent.connectedCustomer.address.city;
+        }
+        $scope.customerProvidedAddress = text;
 
         function determineDecision(data) {
             alert("Nous pouvons vous livrer :)");

@@ -11,7 +11,8 @@
             <li ng-repeat="oos in orderOrganizationStatus" ng-class="{'active': oos.active === true}" ng-click="switchOrganizationStatus(oos.id)">{{oos.label}}</li>
         </ul>
         <div class="ec_container_order_history">
-            <div class="an_order" ng-show="domain.possiblesValues.indexOf(order.status) || domain.label === 'Toutes'" ng-class="{'active': order.active === true, 'ended': order.status === 'Livrée', 'in_progress': order.status === 'En cours', 'canceled': order.status === 'Non livrée'}" ng-repeat="order in orderHistoryList">
+            
+            <div class="an_order" ng-repeat="order in orderHistoryList[domain].orders" ng-class="{'active': order.active === true, 'ended': order.status === 'Livrée', 'in_progress': order.status === 'Validée' || order.status === 'Attribuée' || order.status === 'En cours de livraison', 'canceled': order.status === 'Non livrée' || order.status === 'Annulée'}">
                 <div class="an_order_header" ng-click="dropdownOrder(order.idOrder)">
                     <div class="order_number">
                         <span class="order_number_label">Commande n°</span>
@@ -19,9 +20,12 @@
                     </div>
                     <div class="order_status">
                         <span class="order_status_icon" ng-switch="order.status">
+                            <i ng-switch-when="Validée" class="fas fa-spinner"></i>
+                            <i ng-switch-when="Attribuée" class="fas fa-spinner"></i>
+                            <i ng-switch-when="En cours de livraison" class="fas fa-spinner"></i>
                             <i ng-switch-when="Livrée" class="fas fa-check-circle"></i>
-                            <i ng-switch-when="En cours" class="fas fa-spinner"></i>
                             <i ng-switch-when="Non livrée" class="fas fa-times-circle "></i>
+                            <i ng-switch-when="Annulée" class="fas fa-times-circle "></i>
                         </span>
                         <span class="order_status_label">{{order.status}}</span>
                     </div>
@@ -50,19 +54,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="product in articles">
+                            <tr ng-repeat="product in order.articles">
                                 <td class="td_product_quantity">{{product.quantity}}</td>
                                 <td class="td_product_product_name">{{product.label}}</td>
-                                <td class="td_empty"></td>
-                            </tr>
-                            <tr>
-                                <td class="td_product_quantity">1</td>
-                                <td class="td_product_product_name">Pizza Steak</td>
-                                <td class="td_empty"></td>
-                            </tr>
-                            <tr>
-                                <td class="td_product_quantity">2</td>
-                                <td class="td_product_product_name">Pizza Mongelli</td>
                                 <td class="td_empty"></td>
                             </tr>
                         </tbody>

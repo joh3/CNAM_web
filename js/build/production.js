@@ -390,6 +390,7 @@ angular
     'CategoryService',
     'CustomerService',
     'DateTimeService',
+    'GoogleMapsOverrideService',
     'OrderService',
     'OrderHistoryService',
     'ShippingService',
@@ -406,28 +407,27 @@ angular
     API_KEY: 'AIzaSyAaojRfzhFQENpxLM9W8zpKOLf4D0SaLGY',
     dataPath: 'http://localhost:3000/'
   })
-  .controller('AppCtrl', function($scope, CustomerFactory, $q) {
+  .controller('AppCtrl', function($q, $scope, AddressModel, CustomerFactory, CustomerModel) {
 
     // API Key
     //console.log(config.API_KEY);
     $scope.api_key = 'AIzaSyAaojRfzhFQENpxLM9W8zpKOLf4D0SaLGY';
+    var idCus = 1;
 
     // Nombre d'articles
     $scope.mainBasketArticlesQuantity;
     $scope.connectedCustomer = {};
+    $scope.connectedCustomerAddress;
 
     // Client
-    CustomerFactory.getCustomerById(1, getCustomerByIdCallback);
+    CustomerFactory.getCustomerById(idCus, getCustomerByIdCallback);
 
     function getCustomerByIdCallback (customer) {
+      //console.log(customer)
+      
       $scope.connectedCustomer = customer;
       $scope.connectedCustomer.miniature = './assets/images/various/default-user-miniature.png';
-      console.log($scope.connectedCustomer);
-      /*isImage('./assets/images/customers/' + $scope.connectedCustomer.idCustomer + '.png')
-        .then(function(test) {
-          $scope.connectedCustomer.miniature = './assets/images/various/default-user-miniature.png';
-          //$scope.connectedCustomer.miniature = (test) ? './assets/images/customers/' + $scope.connectedCustomer.idCustomer + '.png' : './assets/images/various/default-user-miniature.png';
-        });*/
+      $scope.connectedCustomer = $scope.connectedCustomer;
     }
 
     function isImage(src) {
@@ -594,7 +594,7 @@ angular.module('ArticleService', ['ngCookies', 'BasketService', 'CategoryService
 'use strict';
 
 angular.module('BasketService', ['ngCookies'])
-    .factory('BasketFactory', function($cookies, ShippingFactory) {
+    .factory('BasketFactory', function($cookies, ShippingFactory, $http) {
 
         var basket = [];
         var basketService = {};
@@ -732,6 +732,25 @@ angular.module('BasketService', ['ngCookies'])
             return basketQtyBeforeAddition;
         };
 
+        basketService.confirmCommand = function(obj) {
+            var url = 'http://localhost:3000/';
+            var objJSON = angular.toJson(obj, true);
+
+            console.log(obj.article[0].idArticle);
+            
+            /*$http({
+                method: 'POST',
+                url: url + "addCmd",
+                data: angular.toJson(obj, true),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            })*/
+
+            $http.post(url + 'addCmd', obj)
+                .then(function(data) {
+                    console.log(data);
+                });
+        };
+
         /*basketService.notifyQuantityChangement = function(basketQtyBeforeAddition, basketQtyAfterAddition) {
             /*if (basketQtyBeforeAddition < basketQtyAfterAddition) {
                 var popup = Notifier.openPopUp(basketQtyAfterAddition - basketQtyBeforeAddition);
@@ -748,23 +767,18 @@ angular.module('BasketService', ['ngCookies'])
 'use strict';
 
 angular.module('CustomerService', ['AddressService'])
-    .factory('CustomerModel', function(AddressModel, AddressFactory) {
+    .factory('CustomerModel', function(AddressModel) {
 
-        function Customer(idCustomer, lastname, firstname, email, phoneNumber, idAddress) {
+        function Customer(idCustomer, lastname, firstname, email, phoneNumber, idAddress, address, zip, city) {
             this.idCustomer = idCustomer;
             this.lastname = lastname;
             this.firstname = firstname;
             this.email = email;
             this.phoneNumber = phoneNumber;
-            this.address;
-            this.address = AddressFactory.getAddressById(idAddress, getAddressByIdCallback);
+            this.address = AddressModel.build({idAddress, address, zip, city});
         }
 
-        function getAddressByIdCallback(address) {
-            this.address = AddressModel.buildFR(address);
-        }
-
-        Customer.built = function(data)
+        Customer.buildFR = function(data)
         {
             return new Customer(
                 data.idClient,
@@ -772,7 +786,10 @@ angular.module('CustomerService', ['AddressService'])
                 data.prenom,
                 data.email,
                 data.numTel,
-                data.idAdresse
+                data.idAdresse,
+                data.Adresse,
+                data.codePostal,
+                data.ville
             );
         };
 
@@ -786,8 +803,7 @@ angular.module('CustomerService', ['AddressService'])
         customerService.getCustomerById = function(idCustomer, callback) {
             $http.get(config.dataPath + 'client/' + idCustomer)
                 .then(function(response) {
-                    //console.log(response.data[0]);
-                    callback(CustomerModel.built(response.data[0]));
+                    callback(CustomerModel.buildFR(response.data[0]));
                 });
         };
 
@@ -1055,19 +1071,25 @@ angular
 
 angular
     .module('ShippingModule', [])
-    .controller('ShippingCtrl', function($scope, $location, ShippingFactory) {
-
-        $scope.on_shipping_page = true;
-
-        var latlng = new google.maps.LatLng(43.5655445, 1.457051);
-        $scope.map = new google.maps.Map(document.getElementById('map'), {
-            center: latlng,
-            zoom: 8
-          });
+    .controller('ShippingCtrl', function($scope, $location, GoogleMapsOverrideFactory, ShippingFactory) {
 
         $scope.shippingModes = ShippingFactory.getShippingModes();
         $scope.shippingModeSelected = ShippingFactory.getShippingModeSelected();
         $scope.shippingPrice = 0;
+
+        GoogleMapsOverrideFactory.initializeMaps();
+        //console.log(GMO)
+
+        $scope.on_shipping_page = true;
+        var text = "";
+        if ($scope.$parent.connectedCustomer.address.address !== undefined && $scope.$parent.connectedCustomer.address.zip !== undefined && $scope.$parent.connectedCustomer.address.city !== undefined) {
+            text = $scope.$parent.connectedCustomer.address.address + " " + $scope.$parent.connectedCustomer.address.zip + " " + $scope.$parent.connectedCustomer.address.city;
+        }
+        $scope.customerProvidedAddress = text;
+
+        function determineDecision(data) {
+            alert("Nous pouvons vous livrer :)");
+        }
 
         if ($scope.shippingModeSelected !== null) {
             $scope.shippingPrice = $scope.shippingModeSelected.frais;
@@ -1104,7 +1126,10 @@ angular
             }
         });*/
 
-        // Sélection de l'adresse
+        // Vérifier éligibilité de l'adresse
+        $scope.checkEligiblility = function() {
+            GoogleMapsOverrideFactory.getAddressProvided($scope.customerProvidedAddress, determineDecision);
+        };
 
     });
 'use strict';
@@ -1147,6 +1172,18 @@ angular
         };
 
         $scope.confirmCommand = function() {
+            var obj = {
+                adresse: $scope.$parent.connectedCustomer.address.address,
+                codePostal: $scope.$parent.connectedCustomer.address.zip,
+                ville: $scope.$parent.connectedCustomer.address.city,
+                prixTotalHT: $scope.totalBasketCheckPriceExcludingTax,
+                prixTotalTTC: $scope.totalBasketCheckPriceIncludingTax,
+                idClient: $scope.$parent.connectedCustomer.idCustomer,
+                article: $scope.basketArticlesList
+            };
+
+            BasketFactory.confirmCommand(obj);
+
             $scope.isCommandConfirmed = true;
         };
 
