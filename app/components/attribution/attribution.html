@@ -1,0 +1,88 @@
+<div class="container mb-4" id="cent">
+    <div class="alert alert-success" ng-show="isCommited" id="alert-width" role="alert">
+        La Tournée est attribuée !
+    </div>
+
+    <div class="container mb-4" id="cent">
+        <div class="panel panel-default">
+            <div class="panel-heading">            
+                <h3> Liste des commandes à attribuer</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <!--The div element for the map -->
+                        <div id="map"></div>
+
+                    </div>
+                    <div class="col-md-5">
+                        <div class="row">
+
+                            <ul class="list-group"ng-repeat="item in data| startFrom:currentPage * pageSize | limitTo:pageSize">
+
+                                <li class="list-group-item" >
+                                    {{item.title}} 
+                                    <div class="material-switch pull-right">
+                                        <input id="{{item.id}}" name="someSwitchOption001" type="checkbox" ng-click="attributionCtrl.pushOrPullCommands($event);"/>
+                                        <label for="{{item.id}}" class="label-info"></label>
+                                    </div>
+                                </li>
+
+
+
+                            </ul>
+                            <button type="button"  class="btn btn-primary" ng-disabled="currentPage == 0" ng-click="currentPage = currentPage - 1">Précédent</button>
+                            <button type="button" class="btn btn-primary pull-right" ng-disabled="currentPage >= data.length / pageSize - 1" ng-click="currentPage = currentPage + 1">Suivant</button>
+                        </div>
+                        <!--  <div class="list-group" ng-repeat="item in data| startFrom:currentPage * pageSize | limitTo:pageSize">
+                          
+                              <button type="button" class="list-group-item list-group-item-action " aria-pressed="false" >{{item}}
+                                  
+                                  <span class="badge badge-primary badge-pill">14</span></button>
+                          </div>
+                          <button type="button"  class="btn btn-primary" ng-disabled="currentPage == 0" ng-click="currentPage = currentPage - 1">Précédent</button>
+                          <button type="button" class="btn btn-primary pull-right" ng-disabled="currentPage >= data.length / pageSize - 1" ng-click="currentPage = currentPage + 1">Suivant</button>
+                        -->
+                        <br/>Ordre des commandes:<br/>
+                        
+                        <div ng-repeat="(key, value) in commandsToAssign"style="float:left" >
+                            ({{key}}): CMD {{value}},
+                        </div>
+
+
+                        <div class="row">
+                            <button type="button" class="btn btn-primary btn-lg btn-block " ng-disabled="commandsToAssign.length === 0" style="margin-top: 10%;" data-toggle="modal" data-target="#exampleModalCenter" ng-click="attributionCtrl.getLivreur();">Selectionner un livreur</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Livreurs Disponibles
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button></h5>
+                </div>
+                <div class="modal-body">
+                    <div class="funkyradio" ng-repeat="livreur in listeLivreurs" id="livreurDispo">
+
+                        <div class="funkyradio-success">
+                            <input type="radio" name="radio" ng-click="attributionCtrl.pickLivreur($event);" id="{{livreur.id}}"  />
+                            <label for="{{livreur.id}}">{{livreur.personne}}</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-disabled="livreurPicked === null" ng-click="attributionCtrl.commitAttribution();">Valider</button>
+                </div>
+            </div>
+        </div>
+    </div>

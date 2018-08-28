@@ -2,12 +2,23 @@
 
 angular
   .module('OrderTrackingModule', [])
-  .controller('OrderTrackingCtrl', function($scope, $routeParams, OrderTrackingFactory) {
+  .controller('OrderTrackingCtrl', function($scope, $routeParams, attributionService, OrderTrackingFactory) {
 
     $scope.order = {};
     $scope.on_shipping_page = true;
     $scope.socket = io.connect('http://localhost:3000');
     $scope.socket.on("newGeoServeur", getCoordinates);
+
+    initMap();
+
+    function initMap() {
+      var markers = [];
+      var CNAM = {lat: 43.566194, lng: 1.466705};
+      var map = new google.maps.Map(
+              document.getElementById('map'),
+              {zoom: 14, center: CNAM}
+            );
+    }
 
     OrderTrackingFactory.getOrderById($routeParams.idOrder, getOrderByIdCallback);
 

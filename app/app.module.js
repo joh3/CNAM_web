@@ -8,6 +8,8 @@
  *
  * Main module of the application.
  */
+ 
+
 angular
   .module('ecApp', [
     'ngCookies',
@@ -34,7 +36,11 @@ angular
     'OrderTrackingModule',
     'ShippingModule',
     'ecNavbar',
-    'ecFooter'
+    'ecFooter',
+	'ValidationModule',
+	'validationService',
+	'AttributionModule',
+	'AttributionService'
   ])
   .constant('config', {
     dataPath: 'http://localhost:3000/'

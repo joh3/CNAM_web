@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+
+
+<div class="container mb-4" id="cent">
+    <div class="alert alert-success" ng-show="validated" id="alert-width" role="alert">
+        {{msgValidated}}
+    </div>
+    
+    <div class="alert alert-danger " ng-show="error"id="alertError-width" role="alert">
+        Erreur lors du changement d'etat ou suppression de la commande !
+    </div>
+    
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h2>Liste des commandes à valider</h2>
+            <div class="list-group" ng-repeat="cmd in validateCommands">
+                <a href="" class="list-group-item" id="{{cmd.idCommande}}" data-toggle="modal" data-target="#myModal" ng-click="validationCtrl.detailCmd(cmd.idCommande)">
+                    <h4 class="list-group-item-heading">{{cmd.nom}} {{cmd.prenom}}</h4>
+                    <p class="list-group-item-text">Commande du {{cmd.date| date:'dd-MM-yyyy HH:mm:ss'}}</p>
+                    <p class="list-group-item-text">TOTAL TTC: {{cmd.prixTotalTTC}} €</p>
+
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Valider la commande ?</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-6" >
+                            <p >Articles:</p>
+                            <div ng-if="CommandDetails.length == null">
+                                Aucun articles dans cette commande( Targa ta fait quoi en BD encore) :)
+                            </div>
+                            <div ng-if="CommandDetails.length > 0">
+                                <div ng-repeat="details in CommandDetails">
+                                    <p>x{{details.quantite}} {{details.libelle}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6"><p>Renseignement Client: </p>
+                            <p>{{clientDetails[0].prenom}} {{clientDetails[0].nom}}</p>
+                            <p>{{clientDetails[0].adresse}}</p>
+                            <p>{{clientDetails[0].codePostal}} {{clientDetails[0].ville}}</p>  
+                            <p> {{clientDetails[0].numTel}} </p>
+                        </div>
+                    </div> 
+                </div>
+
+
+
+                <div class="modal-footer">
+                    <button type="button"   ng-click="validationCtrl.validerCmd()" data-toggle="modal" data-dismiss="modal"  class="btn btn-lg btn-success pull-left" >Valider</button>
+                    <button type="button" ng-click="validationCtrl.supprimerCmd()"  class="btn btn-lg btn-danger"  data-toggle="modal"data-dismiss="modal" >Supprimer</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+

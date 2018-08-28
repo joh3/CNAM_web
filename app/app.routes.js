@@ -47,6 +47,16 @@ angular
         templateUrl: './app/components/order-tracking/order-tracking.template.html',
         css: './assets/styles/order-tracking.style.css'
       })
+      .when('/validation', {
+        template: '<validation></validation>',
+        //templateUrl: './app/components/validation/validation.html',
+        css: './assets/styles/validation.css'
+      })
+      .when('/attribution', {
+        template: '<attribution></attribution>',
+        //templateUrl: './app/components/validation/validation.html',
+        css: './assets/styles/attribution.css'
+      })
       .otherwise({
         redirectTo: '/'
       });

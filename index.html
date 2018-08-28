@@ -7,8 +7,12 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <title>E-Command - Le Pizzatologue</title>
 
+
     <!-- Styles -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
     <link rel="stylesheet" href="./assets/styles/main.style.css">
 
   </head>
@@ -24,6 +28,9 @@
     <!-- Pied de page -->
     <ec-footer></ec-footer>
 
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- bower:js -->
     <script src="./bower_components/angular/angular.min.js"></script>
     <script src="./bower_components/angular-cookies/angular-cookies.min.js"></script>
@@ -32,7 +39,6 @@
     <script src="./bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="./bower_components/jquery/dist/jquery.min.js"></script>
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
-    <script src="http://maps.google.com/maps/api/js?key=AIzaSyA550ysdCoFysF6ley9wUrNKf3Z2305K8s"></script>
     <!-- endbower -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -51,6 +57,10 @@
     <script src="./app/components/order-history/order-history.service.js"></script>
     <script src="./app/components/order-tracking/order-tracking.service.js"></script>
     <script src="./app/components/shipping/shipping.service.js"></script>
+    <script src="./app/components/order-history/order-history.service.js"></script>
+	<script src="./app/components/validation/validationService.js"></script>
+	<script src="./app/components/attribution/attributionService.js"></script>
+
     
     <!-- Directives -->
     <script src="./app/shared/footer/footer.directive.js"></script>
@@ -65,6 +75,11 @@
     <script src="./app/components/order-history/order-history.controller.js"></script>
     <script src="./app/components/order-tracking/order-tracking.controller.js"></script>
     <script src="./app/components/shipping/shipping.controller.js"></script>
+	<script src="./app/components/validation/validationCtrl.js"></script>
+	<script src="./app/components/attribution/attributionCtrl.js"></script>
 
+
+<script src="https://maps.googleapis.com/maps/api/js?key=COTEUH_L_API_KEY"></script>
+	
   </body>
 </html>
