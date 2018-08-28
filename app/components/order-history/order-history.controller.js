@@ -27,7 +27,7 @@ angular
 
     function getOrderHistoryByCustomerCallback(orderHistory) {
 
-      //console.log(orderHistory)
+      
       var currentOrder, currentIndex, currentIndex2, idDomain;
       
       $scope.orderHistoryList[0] = {};
@@ -47,6 +47,7 @@ angular
         currentIndex = $scope.orderHistoryList[0].orders.findIndex(x => x.idOrder === item.idCommande);
         if (currentIndex == -1) {
           currentOrder = OrderModel.buildFR(item);
+          //console.log(currentOrder)
           currentOrder.active = false;
           currentOrder.totalPriceExcludingTaxFloat = BasketFactory.getFloatPrice(currentOrder.totalPriceExcludingTax);
           currentOrder.totalPriceIncludingTaxFloat = BasketFactory.getFloatPrice(currentOrder.totalPriceIncludingTax);

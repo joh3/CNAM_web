@@ -2,17 +2,17 @@
 
 angular
     .module('CommandConfirmationModule', [])
-    .controller('CommandConfirmationCtrl', function($scope, BasketFactory) {
+    .controller('CommandConfirmationCtrl', function($scope, BasketFactory, ShippingFactory) {
 
         $scope.basketArticlesList = BasketFactory.getBasketContent();     // Panier de commande
-        $scope.totalBasketCheckPriceExcludingTax = 0;                         // Prix total HT
-        $scope.totalBasketCheckPriceExcludingTaxFloatFormat = null;              // Prix total HT au format 'Float'
+        $scope.totalBasketCheckPriceExcludingTax = 0;                     // Prix total HT
+        $scope.totalBasketCheckPriceExcludingTaxFloatFormat = null;       // Prix total HT au format 'Float'
         $scope.shippingPriceLabel = '';                                   // Libellé des frais de livraison
-        $scope.shippingPrice = 0;                                             // Frais de livraison
-        $scope.vatPrice = 0;                                                  // Frais de TVA
-        $scope.vatPriceFloatFormat = null;                                       // Frais de TVA au format 'Float'
-        $scope.totalBasketCheckPriceIncludingTax = 0;                         // Prix total TTC
-        $scope.totalBasketCheckPriceIncludingTaxFloatFormat = null;              // Prix total TTC au format 'Float'
+        $scope.shippingPrice = 0;                                         // Frais de livraison
+        $scope.vatPrice = 0;                                              // Frais de TVA
+        $scope.vatPriceFloatFormat = null;                                // Frais de TVA au format 'Float'
+        $scope.totalBasketCheckPriceIncludingTax = 0;                     // Prix total TTC
+        $scope.totalBasketCheckPriceIncludingTaxFloatFormat = null;       // Prix total TTC au format 'Float'
         $scope.isCommandConfirmed = false;
     
         $scope.$watch('basketArticlesList', function() {
@@ -38,19 +38,32 @@ angular
         };
 
         $scope.confirmCommand = function() {
+
+            var articlesList = [];
+
+            $scope.basketArticlesList.forEach((item, i) => {
+                articlesList[i] = {idArticle: item.idArticle, qte: item.quantity};
+            });
+
             var obj = {
-                adresse: $scope.$parent.connectedCustomer.address.address,
-                codePostal: $scope.$parent.connectedCustomer.address.zip,
-                ville: $scope.$parent.connectedCustomer.address.city,
+                adresse: ShippingFactory.getShippingAddressSelected().address,
+                codePostal: ShippingFactory.getShippingAddressSelected().zip,
+                ville: ShippingFactory.getShippingAddressSelected().city,
                 prixTotalHT: $scope.totalBasketCheckPriceExcludingTax,
                 prixTotalTTC: $scope.totalBasketCheckPriceIncludingTax,
                 idClient: $scope.$parent.connectedCustomer.idCustomer,
-                article: $scope.basketArticlesList
+                article: articlesList
             };
 
-            BasketFactory.confirmCommand(obj);
+            console.log(obj);
 
-            $scope.isCommandConfirmed = true;
+            BasketFactory.confirmCommand(obj, confirmCommandCallback);
+
+            //$scope.isCommandConfirmed = true;
         };
+
+        function confirmCommandCallback(response) {
+            console.log(response);
+        }
 
     });

@@ -27,7 +27,6 @@ angular.module('OrderService', [])
             this.totalPriceIncludingTax = totalPriceIncludingTax;
             this.status = status;
             this.articles = [];
-            //Order.getOrderLinesByOrder(idOrder, this.articles);
         }
 
         Order.build = function(data) {
@@ -88,4 +87,4 @@ angular.module('OrderService', [])
         };
 
         return OrderLine;
-    });
+    })

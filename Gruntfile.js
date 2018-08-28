@@ -23,9 +23,11 @@ module.exports = function(grunt) {
                     "app/shared/navbar/navbar.directive.js",
                     "app/components/article/article.controller.js",
                     "app/components/basket/basket.controller.js",
+                    "app/components/command-confirmation/command-confirmation.controller.js",
                     "app/components/home/home.controller.js",
+                    "app/components/order-history/order-history.controller.js",
+                    "app/components/order-tracking/order-tracking.controller.js",
                     "app/components/shipping/shipping.controller.js",
-                    "app/components/command-confirmation/command-confirmation.controller.js"
                 ],
                 dest: 'js/build/production.js'
             }

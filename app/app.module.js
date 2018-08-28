@@ -12,7 +12,8 @@ angular
   .module('ecApp', [
     'ngCookies',
     'ngRoute',
-    'ngAnimate',
+    'ngAnimate'/*,
+    'ngMap'*/,
     'angularCSS',
     'AddressService',
     'ArticleService',
@@ -23,25 +24,80 @@ angular
     'GoogleMapsOverrideService',
     'OrderService',
     'OrderHistoryService',
+    'OrderTrackingService',
     'ShippingService',
     'HomeModule',
     'ArticleModule',
     'BasketModule',
     'CommandConfirmationModule',
     'OrderHistoryModule',
+    'OrderTrackingModule',
     'ShippingModule',
     'ecNavbar',
     'ecFooter'
   ])
   .constant('config', {
-    API_KEY: 'AIzaSyAaojRfzhFQENpxLM9W8zpKOLf4D0SaLGY',
     dataPath: 'http://localhost:3000/'
   })
-  .controller('AppCtrl', function($q, $scope, AddressModel, CustomerFactory, CustomerModel) {
+  .controller('AppCtrl', function($q, $scope, CustomerFactory) {
+
+    //GoogleMapsOverrideFactory.initializeMaps();
+
+    /*$scope.gmo = {};
+
+    $scope.gmo.geocoder;
+    $scope.gmo.latlng;
+    $scope.gmo.status;
+    $scope.gmo.service;
+    $scope.gmo.map;
+
+    $scope.gmo.initializeMaps = function() {
+      $scope.gmo.geocoder = new google.maps.Geocoder();
+      $scope.gmo.latitude = 43.5670097;
+      $scope.gmo.longitude = 1.4642106;
+      $scope.gmo.latlng = new google.maps.LatLng($scope.gmo.latitude, $scope.gmo.longitude);
+      
+      $scope.gmo.map = new google.maps.Map(document.getElementById('map'), {
+          center: $scope.gmo.latlng,
+          zoom: 8
+        });
+
+      $scope.gmo.service = new google.maps.DistanceMatrixService();
+    };
+    $scope.gmo.initializeMaps
+    console.log($scope.gmo.initializeMaps)
+    //$scope.gmo.initializeMaps();
+
+    $scope.gmo.getAddressProvided = function(address, callback) {
+      $scope.gmo.geocoder.geocode({"address": address}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+              var p2 = {};
+              var latlng2;
+              var strpos;
+
+              strpos = results[0].geometry.location + "";
+              strpos = strpos.replace('(', '');
+              strpos = strpos.replace(')', '');
+
+              p2.lat = parseFloat(strpos.split(", ")[0]);
+              p2.lng = parseFloat(strpos.split(", ")[1]);
+
+              latlng2 = new google.maps.LatLng(p2.lat, p2.lng);
+
+              gmo.service.getDistanceMatrix({
+                  origins: [gmo.latlng],
+                  destinations: [latlng2],
+                  travelMode: 'DRIVING'
+              }, callback);
+          } else {
+              alert("Oups ! Impossible de trouver l'adresse...");
+          }
+      });
+  };*/
 
     // API Key
     //console.log(config.API_KEY);
-    $scope.api_key = 'AIzaSyAaojRfzhFQENpxLM9W8zpKOLf4D0SaLGY';
+    //$scope.api_key = 'AIzaSyAaojRfzhFQENpxLM9W8zpKOLf4D0SaLGY';
     var idCus = 1;
 
     // Nombre d'articles

@@ -139,34 +139,16 @@ angular.module('BasketService', ['ngCookies'])
             return basketQtyBeforeAddition;
         };
 
-        basketService.confirmCommand = function(obj) {
+        basketService.confirmCommand = function(obj, calback) {
             var url = 'http://localhost:3000/';
             var objJSON = angular.toJson(obj, true);
 
-            console.log(obj.article[0].idArticle);
-            
-            /*$http({
-                method: 'POST',
-                url: url + "addCmd",
-                data: angular.toJson(obj, true),
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            })*/
-
             $http.post(url + 'addCmd', obj)
                 .then(function(data) {
-                    console.log(data);
+                    calback(data);
+
                 });
         };
-
-        /*basketService.notifyQuantityChangement = function(basketQtyBeforeAddition, basketQtyAfterAddition) {
-            /*if (basketQtyBeforeAddition < basketQtyAfterAddition) {
-                var popup = Notifier.openPopUp(basketQtyAfterAddition - basketQtyBeforeAddition);
-            }*
-            if (basketQtyBeforeAddition < basketQtyAfterAddition) {
-                //
-            }
-            
-        };*/
 
         return basketService;
 

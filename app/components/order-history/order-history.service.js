@@ -12,9 +12,7 @@ angular.module('OrderHistoryService', [])
         };
 
         orderHistory.getOrderLinesByOrder = function(idOrder) {
-            return $http.get(config.dataPath + 'article/commande/' + idOrder);/*.then(function(response) {
-                callback(response.data);
-            });*/
+            return $http.get(config.dataPath + 'article/commande/' + idOrder);
         };
 
         return orderHistory;

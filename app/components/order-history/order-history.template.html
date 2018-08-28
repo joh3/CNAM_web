@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="an_order_actions">
-                        <button class="btn_a confirm" ng-if="order.status === 'Validée' || order.status === 'Attribuée' || order.status === 'En cours de livraison'">Suivre la commande</button>
+                        <a class="btn_a confirm" href="#!/suivi/{{order.idOrder}}" ng-if="order.status === 'Validée' || order.status === 'Attribuée' || order.status === 'En cours de livraison'">Suivre la commande</a>
                         <button class="btn_a neutral_reverse" ng-click="dropdownOrder(order.idOrder)">Afficher les articles</button>
                     </div>
 
@@ -89,7 +89,6 @@
                             </tr>
                         </tfoot>
                     </table>
-                    <!--span class="order_status">Commande n°</span-->
                 </div>
             </div>
         </div>

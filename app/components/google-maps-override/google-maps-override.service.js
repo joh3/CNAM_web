@@ -9,6 +9,7 @@ angular.module('GoogleMapsOverrideService', [])
         gmo.latlng;
         gmo.status;
         gmo.service;
+        gmo.map;
 
         /**
          * Initialise la position du restaurant et la carte Google
@@ -18,7 +19,7 @@ angular.module('GoogleMapsOverrideService', [])
             this.latlng = new google.maps.LatLng(43.5670097, 1.4642106);
             
             this.map = new google.maps.Map(document.getElementById('map'), {
-                center: this.latlng,
+                center: gmo.latlng,
                 zoom: 8
               });
 

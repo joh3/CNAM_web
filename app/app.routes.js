@@ -42,6 +42,11 @@ angular
         templateUrl: './app/components/basket/basket.template.html',
         css: './assets/styles/basket.style.css'
       })
+      .when('/suivi/:idOrder', {
+        controller: 'OrderTrackingCtrl',
+        templateUrl: './app/components/order-tracking/order-tracking.template.html',
+        css: './assets/styles/order-tracking.style.css'
+      })
       .otherwise({
         redirectTo: '/'
       });
