@@ -7,7 +7,9 @@ angular
     $scope.order = {};
     $scope.on_shipping_page = true;
     $scope.socket = io.connect('http://localhost:3000');
-    $scope.socket.on("newGeoServeur", getCoordinates);
+    $scope.socket.on('newGeoServeur', getCoordinates);
+	$scope.coord;
+	
     var markers = [];
     var CNAM = {lat: 43.566194, lng: 1.466705};
     var map = new google.maps.Map(
@@ -19,28 +21,10 @@ angular
 
     $scope.idTurn;
     $scope.i = 43.566194, $scope.j = 1.466705, $scope.z = 1;
-    /*var tab[];
-    tab[0] = 43.566194;
-    tab[1] = */ 
-
-    /*setInterval(function(i, j) {
-      //console.log($scope.$parent.connectedCustomer.idCustomer);
-      $scope.z = ($scope.z + 1) % 3;
-      $scope.i = generateRandomLat();
-      $scope.j = generateRandomLong();
-      $scope.socket.emit('newGeoMobile', {latitude: $scope.i, longitude: $scope.j, idTournee:1});
-    }, 4000);*/
-
+    
     function getCoordinates(data) {
-      OrderTrackingFactory.getRoundByCustomerAndId($scope.$parent.connectedCustomer.idCustomer, $routeParams.idOrder, getRoundByCustomerAndIdCallback);
-      if ($scope.idTurn === data.idTournee) {
-        var mark = {lat: data.latitude, lng: data.longitude};        
-        deleteMarkers();
-        addMarker(mark);
-        map.setCenter(new google.maps.LatLng(data.latitude,data.longitude));
-        console.log(mark);
-      }
-      
+	  $scope.coord = data;
+      OrderTrackingFactory.getRoundByCustomerAndId($scope.$parent.connectedCustomer.idCustomer, $routeParams.idOrder, getRoundByCustomerAndIdCallback);      
     }
 
     function getOrderByIdCallback(order) {
@@ -49,6 +33,13 @@ angular
 
     function getRoundByCustomerAndIdCallback(data) {
       $scope.idTurn = data;
+	  console.log("tournée commande :" + $scope.idTurn + " tournée send : " + $scope.coord.idTournee);
+	  if ($scope.idTurn == $scope.coord.idTournee) {
+        var mark = {lat: $scope.coord.latitude, lng: $scope.coord.longitude};        
+        deleteMarkers();
+        addMarker(mark);
+        map.setCenter(new google.maps.LatLng($scope.coord.latitude,$scope.coord.longitude));
+      }
     }
 
     // Adds a marker to the map and push to the array.
